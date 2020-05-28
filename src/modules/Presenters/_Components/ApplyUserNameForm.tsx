@@ -1,0 +1,68 @@
+import {
+    Button,
+    Card,
+    CardBody,
+    CardGroup,
+    Col,
+    Container,
+    Form,
+    Input,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupText,
+    Row
+} from 'reactstrap';
+import React from "react";
+
+const ApplyUserNameForm = (props: any) => {
+    let roomName:string, userName:string;
+    const setDetails = () => {
+      props.setRoomDetails({roomName, userName})
+    };
+    return (<div className="app flex-row align-items-center">
+        <Container>
+            <Row className="justify-content-center">
+                <Col md="8">
+                    <CardGroup>
+                        <Card className="p-4">
+                            <CardBody>
+                                <Form>
+                                    <h1>OnStage</h1>
+                                    <p className="text-muted">Join into the classroom</p>
+                                    <InputGroup className="mb-3">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="icon-user"/>
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input type="text" placeholder="Username" onChange={(e) => {
+                                            userName = e.target.value
+                                        }}/>
+                                    </InputGroup>
+                                    <InputGroup className="mb-4">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="icon-lock"/>
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input type="text" placeholder="Room" onChange={(e) => {
+                                            roomName = e.target.value
+                                        }}/>
+                                    </InputGroup>
+                                    <Row>
+                                        <Col xs="12">
+                                            <Button color="primary" className="px-4"
+                                                    onClick={() => setDetails()}>Join</Button>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </CardBody>
+                        </Card>
+                    </CardGroup>
+                </Col>
+            </Row>
+        </Container>
+    </div>);
+};
+
+export default ApplyUserNameForm;
