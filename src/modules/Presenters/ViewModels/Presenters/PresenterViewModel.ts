@@ -2,7 +2,7 @@ import {Observable, useViewModel, ViewModelBase} from "../../../_CommonModels/Vi
 import io from 'socket.io-client';
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('https://192.168.0.151:3000');
+const socket = openSocket('https://35.188.54.111:3000');
 
 class PresenterView extends ViewModelBase {
     public roomName: string = '';
