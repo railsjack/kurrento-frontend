@@ -1,15 +1,14 @@
 import {Observable, useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
-import io from 'socket.io-client';
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('https://35.188.54.111:3000');
+const socket = openSocket('wss://35.188.54.111:3000');
 
 class PresenterView extends ViewModelBase {
     public roomName: string = '';
     public userName: string = '';
     public participants: Array<object> = [];
     public showRoomSelection: boolean = true;
-    public showMeetingRoom: boolean = true;
+    public showMeetingRoom: boolean = false;
     public user: object = {};
 
     constructor() {
@@ -54,7 +53,8 @@ class PresenterView extends ViewModelBase {
         const options = {
             remoteVideo: video,
             mediaConstraints: {
-                audio: (isPresenter && username != this.userName),
+                // audio: (isPresenter && username != this.userName),
+                audio:true,
                 video: true
             },
             onicecandidate: (candidate: any, wp: any) => {
@@ -68,17 +68,18 @@ class PresenterView extends ViewModelBase {
             }
         };
 
+        console.log(options,'consoleoptions')
         // @ts-ignore
         user.rtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options,
             function (err: any) {
                 if (err) {
                     return console.error(err);
+
                 }
                 // @ts-ignore
                 this.generateOffer(onOffer);
             }
         );
-
         const onOffer = (err: any, offer: any, wp: any) => {
             const message = {
                 event: 'receiveVideoFrom',
@@ -187,6 +188,7 @@ class PresenterView extends ViewModelBase {
                     this.receiveVideo(message.userid, message.username, message.isPresenter);
                     break;
                 case 'existingParticipants':
+                    console.log(message,'new participantarrived');
                     this.onExistingParticipants(message.userid, message.existingUsers);
                     break;
                 case 'receiveVideoAnswer':
