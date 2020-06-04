@@ -109,6 +109,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/reactstrap": "^8.4.2",
     "babel-eslint": "10.0.3",
+    "cra-build-watch": "^3.2.0",
     "mutationobserver-shim": "^0.3.3",
     "node-fetch": "^2.6.0",
     "react-scripts": "3.4.0",
@@ -122,7 +123,8 @@
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch": "cra-build-watch"
   },
   "bugs": {
     "url": "https://github.com/coreui/coreui-pro-react-admin-template/issues"
