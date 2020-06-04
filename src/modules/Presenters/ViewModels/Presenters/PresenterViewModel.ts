@@ -1,7 +1,7 @@
 import {Observable, useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('wss://35.188.54.111:3000');
+const socket = openSocket('https://video.zuluvideo.com');
 
 class PresenterView extends ViewModelBase {
     public roomName: string = '';
@@ -48,7 +48,6 @@ class PresenterView extends ViewModelBase {
             rtcPeer: null
         };
         // @ts-ignore
-        console.log(username, 'this.username', this.userName)
         this.participants[user.id] = user;
         const options = {
             remoteVideo: video,
@@ -68,7 +67,6 @@ class PresenterView extends ViewModelBase {
             }
         };
 
-        console.log(options,'consoleoptions')
         // @ts-ignore
         user.rtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options,
             function (err: any) {

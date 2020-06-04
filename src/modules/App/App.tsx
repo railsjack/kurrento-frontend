@@ -13,6 +13,7 @@ import store, {persistor} from '../../config/redux/store';
 import * as action from '../../config/redux/store/actions';
 import './scss/App.scss';
 import Presenters from "../Presenters";
+import Login from "../Login";
 const DefaultLayout = React.lazy(() => import('../../navigation/DefaultLayout'));
 
 export const history = createBrowserHistory();
@@ -35,6 +36,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" name="Home Page" render={(props: any) => <DefaultLayout {...props}/>}/>
                 <Route exact path="/presenters" name="Home Page" render={(props: any) => <Presenters {...props}/>}/>
+                <Route exact path="/login" name="Login Page" render={(props: any) => <Login {...props}/>}/>
               </Switch>
             </React.Suspense>
           </ConnectedRouter>

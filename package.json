@@ -69,6 +69,7 @@
     "react-google-maps": "9.4.5",
     "react-grid-layout": "^0.16.6",
     "react-icons": "^3.9.0",
+    "react-instagram-login": "^1.4.0",
     "react-ladda": "6.0.0",
     "react-moment": "^0.9.7",
     "react-overlay-loader": "0.0.3",
@@ -116,7 +117,7 @@
     "typescript": "^3.9.2"
   },
   "scripts": {
-    "start": "HTTPS=true react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
