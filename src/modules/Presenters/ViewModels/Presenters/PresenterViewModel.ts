@@ -1,6 +1,8 @@
 import {Observable, useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
 import openSocket from 'socket.io-client';
 
+// const socket = openSocket('https://192.168.0.151:3000');
+//
 const socket = openSocket('https://video.zuluvideo.com');
 
 class PresenterView extends ViewModelBase {
@@ -49,11 +51,24 @@ class PresenterView extends ViewModelBase {
         };
         // @ts-ignore
         this.participants[user.id] = user;
+        const constraints = {
+            audio: true,
+            video: {
+                mandatory: {
+                    maxWidth: 240,
+                    minWidth: 240,
+                    maxHeight: 135,
+                    minHeight: 135,
+                    maxFrameRate: 15,
+                    minFrameRate: 15
+                }
+            }
+        };
         const options = {
             remoteVideo: video,
             mediaConstraints: {
                 // audio: (isPresenter && username != this.userName),
-                audio:true,
+                audio: true,
                 video: true
             },
             onicecandidate: (candidate: any, wp: any) => {
@@ -88,15 +103,16 @@ class PresenterView extends ViewModelBase {
             this.sendMessage(message);
         };
     }
-    buildVideoElem(userid:string, username:string){
+
+    buildVideoElem(userid: string, username: string) {
         const video = document.createElement('video');
         const videoContainer = document.createElement('div');
         videoContainer.className = "videoContainer form-row col-md-4 col-sm-6 col-lg-3";
         const centeredDiv = document.createElement('div');
         centeredDiv.className = "mx-auto";
         const name = document.createElement('h3');
-        name.className="userName text-center";
-        if(username===this.userName) name.className+=' curUser';
+        name.className = "userName text-center";
+        if (username === this.userName) name.className += ' curUser';
         video.id = userid;
         video.autoplay = true;
         name.appendChild(document.createTextNode(username));
@@ -106,8 +122,9 @@ class PresenterView extends ViewModelBase {
         document.getElementById('meetingRoom')?.appendChild(videoContainer);
         return video;
     }
-    onExistingParticipants(userid: string, existingUsers: Array<object>) {
 
+    onExistingParticipants(userid: string, existingUsers: Array<object>) {
+        console.clear();
         const video = this.buildVideoElem(userid, this.userName);
         const user: any = {
             id: userid,
@@ -122,15 +139,14 @@ class PresenterView extends ViewModelBase {
             audio: true,
             video: {
                 mandatory: {
-                    maxWidth: 240,
-                    minWidth: 240,
-                    maxHeight: 135,
-                    minHeight: 135,
-                    maxFrameRate: 15,
-                    minFrameRate: 15
+                    minHeight: 180,
+                    maxHeight: 180,
+                    minWidth: 320,
+                    maxWidth: 320
                 }
             }
         };
+
         const options = {
             localVideo: video,
             mediaConstraints: constraints,
@@ -154,7 +170,8 @@ class PresenterView extends ViewModelBase {
                 this.generateOffer(onOffer)
             }
         );
-
+        console.clear();
+        console.log(existingUsers, 'existingUsers')
         existingUsers.forEach((element: any) => {
             this.receiveVideo(element.id, element.name, element.isPresenter);
         });
@@ -168,7 +185,9 @@ class PresenterView extends ViewModelBase {
             this.sendMessage(message);
         };
     }
+
     onReceiveVideoAnswer(senderid: any, sdpAnswer: any) {
+        console.log('senderid',sdpAnswer)
         // @ts-ignore
         this.participants[senderid].rtcPeer.processAnswer(sdpAnswer);
     }
@@ -186,7 +205,7 @@ class PresenterView extends ViewModelBase {
                     this.receiveVideo(message.userid, message.username, message.isPresenter);
                     break;
                 case 'existingParticipants':
-                    console.log(message,'new participantarrived');
+                    console.log(message, 'new participantarrived');
                     this.onExistingParticipants(message.userid, message.existingUsers);
                     break;
                 case 'receiveVideoAnswer':

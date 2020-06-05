@@ -76,7 +76,7 @@ class DefaultLayout extends Component {
                     ) : null;
                   })}
                 </Switch>
-                <Redirect to={'login'}/>
+                <Redirect to={'presenters'}/>
               </Suspense>
             </Container>
           </main>

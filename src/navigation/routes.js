@@ -4,7 +4,7 @@ const Login = React.lazy(() => import('../modules/Login'));
 
 const routes = [
   {path: '/presenters', name: 'Presenters', component: Presenters},
-  {path: '/login', name: 'Presenters', component: Login}
+  {path: '/login', name: 'Login', component: Login}
 ];
 
 export default routes;
