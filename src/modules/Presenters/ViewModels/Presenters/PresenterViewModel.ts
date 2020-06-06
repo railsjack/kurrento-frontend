@@ -187,7 +187,7 @@ class PresenterView extends ViewModelBase {
     }
 
     onReceiveVideoAnswer(senderid: any, sdpAnswer: any) {
-        console.log('senderid',sdpAnswer)
+        console.log('senderid', sdpAnswer)
         // @ts-ignore
         this.participants[senderid].rtcPeer.processAnswer(sdpAnswer);
     }
@@ -195,6 +195,15 @@ class PresenterView extends ViewModelBase {
     addIceCandidate(userid: any, candidate: any) {
         // @ts-ignore
         this.participants[userid].rtcPeer.addIceCandidate(candidate);
+    }
+
+    deleteUser(message: any) {
+        const videoElement = <HTMLVideoElement>document.getElementById(message.deleteUser);
+        if (videoElement) { // @ts-ignore
+            videoElement.parentElement.parentElement.remove();
+            delete this.participants[message.deleteUser];
+            console.log(this.participants,'this.participants');
+        }
     }
 
     loadSocket() {
@@ -205,7 +214,6 @@ class PresenterView extends ViewModelBase {
                     this.receiveVideo(message.userid, message.username, message.isPresenter);
                     break;
                 case 'existingParticipants':
-                    console.log(message, 'new participantarrived');
                     this.onExistingParticipants(message.userid, message.existingUsers);
                     break;
                 case 'receiveVideoAnswer':
@@ -214,6 +222,8 @@ class PresenterView extends ViewModelBase {
                 case 'candidate':
                     this.addIceCandidate(message.userid, message.candidate);
                     break;
+                case 'deleteUser':
+                    this.deleteUser(message);
             }
         });
     }
