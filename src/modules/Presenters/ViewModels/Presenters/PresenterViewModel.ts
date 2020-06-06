@@ -66,11 +66,7 @@ class PresenterView extends ViewModelBase {
         };
         const options = {
             remoteVideo: video,
-            mediaConstraints: {
-                // audio: (isPresenter && username != this.userName),
-                audio: true,
-                video: true
-            },
+            mediaConstraints:constraints,
             onicecandidate: (candidate: any, wp: any) => {
                 const message = {
                     event: 'candidate',
@@ -170,8 +166,6 @@ class PresenterView extends ViewModelBase {
                 this.generateOffer(onOffer)
             }
         );
-        console.clear();
-        console.log(existingUsers, 'existingUsers')
         existingUsers.forEach((element: any) => {
             this.receiveVideo(element.id, element.name, element.isPresenter);
         });
@@ -187,7 +181,6 @@ class PresenterView extends ViewModelBase {
     }
 
     onReceiveVideoAnswer(senderid: any, sdpAnswer: any) {
-        console.log('senderid', sdpAnswer)
         // @ts-ignore
         this.participants[senderid].rtcPeer.processAnswer(sdpAnswer);
     }
