@@ -15,9 +15,13 @@ import {
 import React from "react";
 
 const ApplyUserNameForm = (props: any) => {
-    let roomName:string, userName:string;
+    let roomName: string, userName: string, audienceRoom: string;
     const setDetails = () => {
-      props.setRoomDetails({roomName, userName})
+        props.setRoomDetails({roomName, userName})
+    };
+
+    const inputStyle = {
+        fontSize: 15
     };
     return (<div className="app flex-row align-items-center">
         <Container>
@@ -35,7 +39,7 @@ const ApplyUserNameForm = (props: any) => {
                                                 <i className="icon-user"/>
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input type="text" placeholder="Username" onChange={(e) => {
+                                        <Input type="text" style={inputStyle} placeholder="Username" onChange={(e) => {
                                             userName = e.target.value
                                         }}/>
                                     </InputGroup>
@@ -45,9 +49,20 @@ const ApplyUserNameForm = (props: any) => {
                                                 <i className="icon-lock"/>
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input type="text" placeholder="Room" onChange={(e) => {
+                                        <Input type="text" style={inputStyle} placeholder="Room" onChange={(e) => {
                                             roomName = e.target.value
                                         }}/>
+                                    </InputGroup>
+                                    <InputGroup className="mb-4">
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="icon-people"/>
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input type="text" style={inputStyle} placeholder="Audience room"
+                                               onChange={(e) => {
+                                                   audienceRoom = e.target.value
+                                               }}/>
                                     </InputGroup>
                                     <Row>
                                         <Col xs="12">

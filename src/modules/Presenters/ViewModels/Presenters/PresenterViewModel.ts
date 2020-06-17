@@ -1,9 +1,9 @@
-import {Observable, useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
+import {useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
 import openSocket from 'socket.io-client';
 
-// const socket = openSocket('https://192.168.0.151:3000');
-//
-const socket = openSocket('https://video.zuluvideo.com');
+const socket = openSocket('https://192.168.0.151:3000');
+
+// const socket = openSocket('https://video.zuluvideo.com');
 
 class PresenterView extends ViewModelBase {
     public roomName: string = '';
@@ -41,6 +41,7 @@ class PresenterView extends ViewModelBase {
         }
     }
 
+
     receiveVideo(userid: string, username: string, isPresenter: boolean) {
         const video = this.buildVideoElem(userid, username);
         const user: any = {
@@ -66,7 +67,7 @@ class PresenterView extends ViewModelBase {
         };
         const options = {
             remoteVideo: video,
-            mediaConstraints:constraints,
+            mediaConstraints: constraints,
             onicecandidate: (candidate: any, wp: any) => {
                 const message = {
                     event: 'candidate',
@@ -83,7 +84,6 @@ class PresenterView extends ViewModelBase {
             function (err: any) {
                 if (err) {
                     return console.error(err);
-
                 }
                 // @ts-ignore
                 this.generateOffer(onOffer);
@@ -111,6 +111,8 @@ class PresenterView extends ViewModelBase {
         if (username === this.userName) name.className += ' curUser';
         video.id = userid;
         video.autoplay = true;
+        video.muted = true;
+        video.setAttribute('webkit-playsinline', 'webkit-playsinline');
         name.appendChild(document.createTextNode(username));
         centeredDiv.appendChild(video);
         centeredDiv.appendChild(name);
@@ -120,7 +122,6 @@ class PresenterView extends ViewModelBase {
     }
 
     onExistingParticipants(userid: string, existingUsers: Array<object>) {
-        console.clear();
         const video = this.buildVideoElem(userid, this.userName);
         const user: any = {
             id: userid,
@@ -195,7 +196,7 @@ class PresenterView extends ViewModelBase {
         if (videoElement) { // @ts-ignore
             videoElement.parentElement.parentElement.remove();
             delete this.participants[message.deleteUser];
-            console.log(this.participants,'this.participants');
+            console.log(this.participants, 'this.participants');
         }
     }
 
