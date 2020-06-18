@@ -1,8 +1,6 @@
 import React, {Component, Suspense} from "react";
 import {Redirect, Route, Switch} from "react-router-dom";
 import {Container} from "reactstrap";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
 import * as actions from "../../config/redux/store/actions";
 
 import {
@@ -21,7 +19,6 @@ import navigation from "./_Components/_nav";
 // routes config
 import routes from "../routes";
 
-const DefaultAside = React.lazy(() => import("./_Components/DefaultAside"));
 const DefaultFooter = React.lazy(() => import("./_Components/DefaultFooter"));
 const DefaultHeader = React.lazy(() => import("./_Components/DefaultHeader"));
 
@@ -37,13 +34,6 @@ class DefaultLayout extends Component {
     this.props.history.push("/login");
     this.props.dispatch(actions.authLogout());
   }
-
-  /*loadNavigation(e) {
-    e.preventDefault();
-    this.props.history.push("/administration");
-    this.props.dispatch(actions.loadLeftNavigation());
-  }*/
-
   removeASidebar() {
     document.body.classList.remove('aside-menu-lg-show');
   }

@@ -39,15 +39,15 @@ class App extends Component {
             <ToastContainer/>
             <React.Suspense fallback={loading()}>
               <Switch>
-                <Route exact path="/default" name="Home Page" render={(props: any) => <DefaultLayout {...props}/>}/>
+                <Route exact path="/" name="Home Page" render={(props: any) => <DefaultLayout {...props}/>}/>
                 {/*<Route exact path="/presenters" name="Home Page" render={(props: any) => <Presenters {...props}/>}/>*/}
                 <Route exact path="/signin" name="Login Page" render={(props: any) => <SignIn {...props}/>}/>
-                <Route exact path="/home" name="Home Page" render={(props: any) => <Home {...props}/>}/>
-                <Route exact path="/events/new" name="Events Page" render={(props: any) => <Events {...props}/>}/>
-                <Route exact path="/events/:id/edit" name="Events Page" render={(props: any) => <Events {...props}/>}/>
-                <Route exact path="/organization/new" name="Organization Page" render={(props: any) => <AddOrganization {...props}/>}/>
-                <Route exact path="/organization/:id/edit" name="Organization Page" render={(props: any) => <AddOrganization {...props}/>}/>
-                <Route exact path="/organization/list" name="Organization Page" render={(props: any) => <ListOrganization {...props}/>}/>
+                {/*<Route exact path="/home" name="Home Page" render={(props: any) => <Home {...props}/>}/>*/}
+                {/*<Route exact path="/events/new" name="Events Page" render={(props: any) => <Events {...props}/>}/>*/}
+                {/*<Route exact path="/events/:id/edit" name="Events Page" render={(props: any) => <Events {...props}/>}/>*/}
+                {/*<Route exact path="/organization/new" name="Organization Page" render={(props: any) => <AddOrganization {...props}/>}/>*/}
+                {/*<Route exact path="/organization/:id/edit" name="Organization Page" render={(props: any) => <AddOrganization {...props}/>}/>*/}
+                {/*<Route exact path="/organization/list" name="Organization Page" render={(props: any) => <ListOrganization {...props}/>}/>*/}
               </Switch>
             </React.Suspense>
           </ConnectedRouter>

@@ -9,6 +9,7 @@ const AddOrganization = React.lazy(() => import('../modules/Organizations/Views/
 const ListOrganization = React.lazy(() => import('../modules/Organizations/Views/ListOrganization'));
 
 const routes = [
+    {path: '/',exact:true,name:'Home'},
     {path: '/presenters', name: 'Presenters', component: Presenters},
     {path: '/signin', name: 'signin', component: SignIn},
     {path: '/home', name: 'home', component: Home},
