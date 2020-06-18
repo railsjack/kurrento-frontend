@@ -8,6 +8,7 @@ const socket = openSocket('https://192.168.0.151:3000');
 class PresenterView extends ViewModelBase {
     public roomName: string = '';
     public userName: string = '';
+    public audienceRoom: string = '';
     public participants: Array<object> = [];
     public showRoomSelection: boolean = true;
     public showMeetingRoom: boolean = false;
@@ -25,6 +26,7 @@ class PresenterView extends ViewModelBase {
     joinRoom(data: any) {
         this.userName = data.userName;
         this.roomName = data.roomName;
+        this.audienceRoom = data.audienceRoom;
         this.showRoomSelection = false;
         if (!this.roomName || !this.userName) {
             alert('Room and Name are required!');
@@ -32,7 +34,8 @@ class PresenterView extends ViewModelBase {
             const message = {
                 event: 'joinRoom',
                 userName: this.userName,
-                roomName: this.roomName
+                roomName: this.roomName,
+                audienceRoom:this.audienceRoom
             };
             this.sendMessage(message);
             this.showRoomSelection = false;
@@ -193,7 +196,8 @@ class PresenterView extends ViewModelBase {
 
     deleteUser(message: any) {
         const videoElement = <HTMLVideoElement>document.getElementById(message.deleteUser);
-        if (videoElement) { // @ts-ignore
+        if (videoElement) {
+            // @ts-ignore
             videoElement.parentElement.parentElement.remove();
             delete this.participants[message.deleteUser];
             console.log(this.participants, 'this.participants');

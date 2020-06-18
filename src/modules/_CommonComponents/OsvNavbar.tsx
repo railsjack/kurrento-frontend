@@ -10,6 +10,7 @@ import {
     NavLink,
     UncontrolledDropdown
 } from "reactstrap";
+import { Link } from 'react-router-dom';
 
 const OsvNavbar = (props: any) => {
     const userDetails = Observable.getReduxValue('userDetails');
@@ -31,11 +32,26 @@ const OsvNavbar = (props: any) => {
                     {/*Warning: React does not recognize the `inNavbar` prop on a DOM element.*/}
                     {/*waiting for reactstrap@5.0.0-alpha.5*/}
                     <DropdownToggle nav caret className={'text-white'}>
+                        Organizations
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem>
+                            <Link to={'/organization/new/'}>Create Organization</Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Link to={'/organization/list/'}>List Organizations</Link>
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar>
+                    {/*Warning: React does not recognize the `inNavbar` prop on a DOM element.*/}
+                    {/*waiting for reactstrap@5.0.0-alpha.5*/}
+                    <DropdownToggle nav caret className={'text-white'}>
                         Event
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem>
-                            <a href="/events/new">Create Event</a>
+                            <Link to={'/events/new/'}>Create Event</Link>
                         </DropdownItem>
                         <DropdownItem>
                             Option 2
@@ -47,7 +63,7 @@ const OsvNavbar = (props: any) => {
                     </DropdownMenu>
                 </UncontrolledDropdown>
                 <NavItem>
-                    <NavLink href="/presenters" className={'text-white'}>Presenter</NavLink>
+                    <Link to="/presenters" className={'text-white'}>Presenter</Link>
                 </NavItem>
                 <NavItem>
                     <NavLink href="https://github.com/reactstrap/reactstrap" target="_blank"

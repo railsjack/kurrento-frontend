@@ -21,8 +21,6 @@ class DefaultHeader extends Component {
 
     // eslint-disable-next-line
     const {children, ...attributes} = this.props;
-    const userData = JSON.parse(sessionStorage.getItem('user'));
-
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile/>
@@ -31,13 +29,14 @@ class DefaultHeader extends Component {
           className={'navbar-brand'}>
           <AppNavbarBrand
             tag={'div'}
-            full={{src: '/assets/img/favicon.png', width: 30, alt: 'Avatar Insurance Logo'}}
+            full={{src: logo, width: 100, alt: 'Avatar Insurance Logo'}}
             minimized={{src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo'}}
           />
         </NavLink>
         <AppSidebarToggler className="d-md-down-none mr-auto" display="lg"/>
         <Nav className="ml-lg-5" navbar>
-          <strong>{'Welcome, ' + 'admin'}</strong>
+          <strong>Welcome Admin!</strong>
+          {/*<strong>{'Welcome, ' + (userData && userData.s_ScreenName)}</strong>*/}
           <DefaultHeaderDropdown onLogout={this.props.onLogout} accnt/>
         </Nav>
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}

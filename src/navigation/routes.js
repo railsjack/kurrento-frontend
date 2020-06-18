@@ -5,7 +5,8 @@ const Presenters = React.lazy(() => import('../modules/Presenters'));
 const SignIn = React.lazy(() => import('../modules/User/Views/Login'));
 const SignUp = React.lazy(() => import('../modules/User/Views/Login'));
 const Home = React.lazy(() => import('../modules/Home/Views/Home'));
-const Organization = React.lazy(() => import('../modules/Organizations/Views/AddOrganization'));
+const AddOrganization = React.lazy(() => import('../modules/Organizations/Views/AddOrganization'));
+const ListOrganization = React.lazy(() => import('../modules/Organizations/Views/ListOrganization'));
 
 const routes = [
     {path: '/presenters', name: 'Presenters', component: Presenters},
@@ -13,8 +14,9 @@ const routes = [
     {path: '/home', name: 'home', component: Home},
     {path: '/events/new', name: 'Events', component: Events},
     {path: '/events/:id/edit', name: 'Events', component: Events},
-    {path: '/organization/new', name: 'Organization', component: Organization},
-    {path: '/organization/:id/edit', name: 'Organization', component: Organization},
+    {path: '/organization/new', name: 'Organization', component: AddOrganization},
+    {path: '/organization/:id/edit', name: 'Organization', component: AddOrganization},
+    {path: '/organization/list', name: 'Organization', component: ListOrganization},
     {path: '/signup', name: 'singup', component: SignUp},
     {path: '/create_room', name: 'Create Room', component: SignIn},
 ];

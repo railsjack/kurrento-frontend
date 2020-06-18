@@ -59,6 +59,17 @@ class CallServerPromiseClass {
     saveOrg(data: object) {
         return this.call_server_promise('org/save', data);
     }
+
+    listOrgs(data: object) {
+        return this.call_server_promise('org/list', data);
+    }
+
+    deleteOrg(data: object) {
+        return this.call_server_promise('org/deleteOrg', data);
+    }
+    getOrgDataById(data: object) {
+        return this.call_server_promise('org/getOrgById', data);
+    }
 }
 
 export const CallServerPromise = new CallServerPromiseClass();

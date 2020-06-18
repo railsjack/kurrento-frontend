@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import '../../components/Plugins/Spinners/Spinners.scss';
+import './Spinners.scss';
 
 const LoadingSpinner = () => (
   <div className="sk-wave">

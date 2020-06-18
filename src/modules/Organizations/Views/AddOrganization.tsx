@@ -5,7 +5,7 @@ import CustomInput from "../../_CommonComponents/CustomInput";
 import useOrganizationViewModel from "../ViewModels/Organizations/OrganizationsViewModel";
 import ImageUploader from "react-images-upload";
 
-const AddEvents = (props: any) => {
+const AddOrganization = (props: any) => {
     const view = useOrganizationViewModel({props});
     const orgInfo = view.orgInfo;
     const onEventInfoChanged = (e: any) => {
@@ -23,7 +23,8 @@ const AddEvents = (props: any) => {
         <Container>
             <Row>
                 <Col sm={12} md={6} className={'offset-md-3 mt-5'}>
-                    <CustomInput.Text label={'Org Name'} name={'name'} onChange={onEventInfoChanged} value={orgInfo.name}/>
+                    <CustomInput.Text label={'Org Name'} name={'name'} onChange={onEventInfoChanged}
+                                      value={orgInfo.name}/>
                     <ImageUploader
                         withIcon={true}
                         buttonText='Choose Logo Image of Org'
@@ -45,7 +46,7 @@ const AddEvents = (props: any) => {
                     />
                     <div className={'form-row mt-3'}>
                         <Button type={'button'} size="md" color="primary" className={'mx-auto'}
-                                onClick={() => view.saveOrg()}>
+                                onClick={() => view.saveOrg(props)}>
                             <i className={'fa fa-save'}/>&nbsp;&nbsp;Save</Button>
                     </div>
                 </Col>
@@ -53,4 +54,4 @@ const AddEvents = (props: any) => {
         </Container>
     </>
 };
-export default AddEvents;
+export default AddOrganization;
