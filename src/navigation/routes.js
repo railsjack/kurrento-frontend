@@ -7,19 +7,15 @@ const SignUp = React.lazy(() => import('../modules/User/Views/Login'));
 const Home = React.lazy(() => import('../modules/Home/Views/Home'));
 const AddOrganization = React.lazy(() => import('../modules/Organizations/Views/AddOrganization'));
 const ListOrganization = React.lazy(() => import('../modules/Organizations/Views/ListOrganization'));
-
 const routes = [
     {path: '/',exact:true,name:'Home'},
     {path: '/presenters', name: 'Presenters', component: Presenters},
-    {path: '/signin', name: 'signin', component: SignIn},
     {path: '/home', name: 'home', component: Home},
     {path: '/events/new', name: 'Events', component: Events},
     {path: '/events/:id/edit', name: 'Events', component: Events},
     {path: '/organization/new', name: 'Organization', component: AddOrganization},
     {path: '/organization/:id/edit', name: 'Organization', component: AddOrganization},
     {path: '/organization/list', name: 'Organization', component: ListOrganization},
-    {path: '/signup', name: 'singup', component: SignUp},
-    {path: '/create_room', name: 'Create Room', component: SignIn},
 ];
 
 export default routes;

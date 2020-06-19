@@ -10,51 +10,39 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import store, {persistor} from '../../config/redux/store';
-import * as action from '../../config/redux/store/actions';
 import './scss/App.scss';
-import Presenters from "../Presenters";
+
 const SignIn = React.lazy(() => import('../User/Views/Login'));
-const Home = React.lazy(() => import('../Home/Views/Home'));
-const Events = React.lazy(() => import('../Events/Views/AddEvents'));
-const AddOrganization = React.lazy(() => import('../Organizations/Views/AddOrganization'));
-const ListOrganization = React.lazy(() => import('../Organizations/Views/ListOrganization'));
 
 const DefaultLayout = React.lazy(() => import('../../navigation/DefaultLayout'));
-
 export const history = createBrowserHistory();
 
 const loading = () =>
-  <div className="animated fadeIn pt-3 text-center">
-    <div className="sk-spinner sk-spinner-pulse"/>
-  </div>;
-
+    <div className="animated fadeIn pt-3 text-center">
+        <div className="sk-spinner sk-spinner-pulse"/>
+    </div>;
 
 class App extends Component {
 
-  render() {
-    return (
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <ConnectedRouter history={history}>
-            <ToastContainer/>
-            <React.Suspense fallback={loading()}>
-              <Switch>
-                <Route exact path="/" name="Home Page" render={(props: any) => <DefaultLayout {...props}/>}/>
-                {/*<Route exact path="/presenters" name="Home Page" render={(props: any) => <Presenters {...props}/>}/>*/}
-                <Route exact path="/signin" name="Login Page" render={(props: any) => <SignIn {...props}/>}/>
-                {/*<Route exact path="/home" name="Home Page" render={(props: any) => <Home {...props}/>}/>*/}
-                {/*<Route exact path="/events/new" name="Events Page" render={(props: any) => <Events {...props}/>}/>*/}
-                {/*<Route exact path="/events/:id/edit" name="Events Page" render={(props: any) => <Events {...props}/>}/>*/}
-                {/*<Route exact path="/organization/new" name="Organization Page" render={(props: any) => <AddOrganization {...props}/>}/>*/}
-                {/*<Route exact path="/organization/:id/edit" name="Organization Page" render={(props: any) => <AddOrganization {...props}/>}/>*/}
-                {/*<Route exact path="/organization/list" name="Organization Page" render={(props: any) => <ListOrganization {...props}/>}/>*/}
-              </Switch>
-            </React.Suspense>
-          </ConnectedRouter>
-        </PersistGate>
-      </Provider>
-    );
-  }
+    render() {
+        return (
+            <Provider store={store}>
+                <PersistGate persistor={persistor}>
+                    <ConnectedRouter history={history}>
+                        <ToastContainer/>
+                        <React.Suspense fallback={loading()}>
+                            <Switch>
+                                <Route auth="true" path="/" name="Home"
+                                       render={(props: any) => <DefaultLayout {...props}/>}/>
+                                <Route exact path="/signin" name="Login Page"
+                                       render={(props: any) => <SignIn {...props}/>}/>
+                            </Switch>
+                        </React.Suspense>
+                    </ConnectedRouter>
+                </PersistGate>
+            </Provider>
+        );
+    }
 }
 
 export default App;

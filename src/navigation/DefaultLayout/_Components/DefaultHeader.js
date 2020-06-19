@@ -5,15 +5,17 @@ import PropTypes from 'prop-types';
 
 import {AppNavbarBrand, AppSidebarToggler} from '@coreui/react';
 import DefaultHeaderDropdown from './DefaultHeaderDropdown'
-import logo from '../../../assets/img/brand/logo.png'
 import sygnet from '../../../assets/img/brand/sygnet.svg'
+import logo from '../../../assets/img/brand/logo.svg'
 //style Santosh
 import '../_Styles/customStyleTwo.css';
+import {Observable} from "../../../modules/_CommonModels/ViewModelBase";
 
 const propTypes = {
   children: PropTypes.node,
 };
-
+const userDetails = Observable.getReduxValue('userDetails');
+console.log(userDetails);
 const defaultProps = {};
 
 class DefaultHeader extends Component {
@@ -29,13 +31,13 @@ class DefaultHeader extends Component {
           className={'navbar-brand'}>
           <AppNavbarBrand
             tag={'div'}
-            full={{src: logo, width: 100, alt: 'Avatar Insurance Logo'}}
+            full={{src: logo, width: 100, alt: 'OnStageVideo Logo'}}
             minimized={{src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo'}}
           />
         </NavLink>
         <AppSidebarToggler className="d-md-down-none mr-auto" display="lg"/>
         <Nav className="ml-lg-5" navbar>
-          <strong>Welcome Admin!</strong>
+          <strong>Welcome {userDetails.name}!</strong>
           {/*<strong>{'Welcome, ' + (userData && userData.s_ScreenName)}</strong>*/}
           <DefaultHeaderDropdown onLogout={this.props.onLogout} accnt/>
         </Nav>

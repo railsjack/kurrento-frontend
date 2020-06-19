@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+import {Observable} from "../../../modules/_CommonModels/ViewModelBase";
 
 const propTypes = {
   accnt: PropTypes.bool,
@@ -8,7 +9,7 @@ const propTypes = {
 const defaultProps = {
   accnt: false,
 };
-
+const userDetails = Observable.getReduxValue('userDetails');
 class DefaultHeaderDropdown extends Component {
 
   constructor(props) {
@@ -31,7 +32,7 @@ class DefaultHeaderDropdown extends Component {
 
       <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle nav>
-          <img src={'assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
+          <img src={userDetails.picture} className="img-avatar" alt="admin@bootstrapmaster.com"/>
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>

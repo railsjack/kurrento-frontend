@@ -1,71 +1,45 @@
 //https://marcoceppi.github.io/bootstrap-glyphicons/
 export default {
-  items: [
-    {
-      name: 'Dashboard',
-      url: '/dashboard',
-      icon: 'icon-user'
-    },
-    {
-      name: 'Client',
-      icon: 'fa fa-users',
-      children: [
+    items: [
         {
-          name: 'Search Client',
-          url: '/searchClient',
-          icon: 'nav-icon icon-note',
+            name: 'Organization',
+            icon: 'fa fa-group',
+            children: [
+                {
+                    name: 'Add Organization',
+                    icon: 'icon-note',
+                    url: '/organization/new/'
+                },
+
+                {
+                    name: 'List Organizations',
+                    icon: 'icon-list',
+                    url: '/organization/list/'
+                }
+            ]
         },
         {
-          name: 'Add Client',
-          url: '/addClient',
-          icon: 'nav-icon icon-note',
-        }
-      ],
-    },
-    {
-      name: 'Company',
-      icon: 'fa fa-building',
-      children: [
-        {
-          name: 'Add Company',
-          url: '/companies/new',
-          icon: 'nav-icon icon-note',
+            name: 'Events',
+            icon: 'fa fa-calendar',
+            children: [
+                {
+                    name: 'Add Event',
+                    url: '/events/new/',
+                    icon: 'nav-icon icon-note',
+                },
+                {
+                    name: 'List Events',
+                    url: '/events/list/',
+                    icon: 'nav-icon icon-list',
+                }
+            ],
         },
+
         {
-          name: 'Search Company',
-          url: '/search-company',
-          icon: 'nav-icon icon-note',
+            name: 'Rooms',
+            icon: 'fa fa-video-camera',
+            url: '/presenters'
         }
-      ],
-    },
-    {
-      name:'Settings',
-      icon:'fa fa-cog',
-      children:[
-        {
-          name: 'Mange Group',
-          icon: 'nav-icon icon-folder',
-          children: [
-            {
-              name: 'Add Group',
-              url: '/settings/group/add-group',
-              icon: 'nav-icon icon-people',
-            }
-          ],
-        },
-        {
-          name: 'Mange User',
-          icon: 'nav-icon icon-folder',
-          children: [
-            {
-              name: 'User List',
-              url: '/settings/users/user-list',
-              icon: 'nav-icon icon-user',
-            }
-          ],
-        }
-      ]
-    }
-  ]
+    ]
 };
 
