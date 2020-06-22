@@ -32,7 +32,7 @@ class DefaultHeaderDropdown extends Component {
 
       <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle nav>
-          <img src={userDetails.picture} className="img-avatar" alt="admin@bootstrapmaster.com"/>
+          <img src={userDetails?.picture} className="img-avatar" alt="admin@bootstrapmaster.com"/>
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>

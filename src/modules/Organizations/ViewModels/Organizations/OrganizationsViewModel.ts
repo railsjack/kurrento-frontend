@@ -9,6 +9,7 @@ class OrganizationView extends ViewModelBase {
     loading: boolean = true;
     organizations: Array<Organization> = [];
     appToast: AppToast;
+    selectedOrgId: string = '';
 
     constructor() {
         super();
@@ -18,12 +19,18 @@ class OrganizationView extends ViewModelBase {
     }
 
     async componentDidMount() {
-        
+        if (this.selectedOrgId) {
+            return this.getOrgDataById(this.selectedOrgId);
+        }
         this.listOrgs();
     }
 
     async getOrgDataById(id: any) {
+        this.loading = true;
         const response = await CallServerPromise.getOrgDataById({id});
+        this.orgInfo = response.data;
+        this.loading = false;
+        this.updateView()
     }
 
     async saveOrg(props: any) {
@@ -49,9 +56,6 @@ class OrganizationView extends ViewModelBase {
 
     async deleteOrg(org_id: number) {
         if (!confirm('Are you sure want to delete?')) return;
-        const deletedIndex = this.organizations.findIndex(item => {
-            return item.org_id == org_id
-        });
         const response: any = await CallServerPromise.deleteOrg({org_id});
         if (response.result === 'success') {
             this.appToast.successMsg(response.msg);

@@ -18,6 +18,7 @@ import {
 import navigation from "./_Components/_nav";
 // routes config
 import routes from "../routes";
+import {Observable} from "../../modules/_CommonModels/ViewModelBase";
 
 const DefaultFooter = React.lazy(() => import("./_Components/DefaultFooter"));
 const DefaultHeader = React.lazy(() => import("./_Components/DefaultHeader"));
@@ -36,6 +37,11 @@ class DefaultLayout extends Component {
   }
   removeASidebar() {
     document.body.classList.remove('aside-menu-lg-show');
+  }
+  componentDidMount() {
+    if(!Observable.getReduxValue('userDetails')){
+      this.props.history.push('/signin');
+    }
   }
 
   render() {

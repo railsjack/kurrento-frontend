@@ -1,17 +1,14 @@
 import {useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
 import openSocket from 'socket.io-client';
-
-const socket = openSocket('https://192.168.0.151:3000');
-
-// const socket = openSocket('https://video.zuluvideo.com');
+const uri:any = process.env.REACT_APP_API_URL;
+const socket = openSocket(uri);
 
 class PresenterView extends ViewModelBase {
     public roomName: string = '';
     public userName: string = '';
     public audienceRoom: string = '';
     public participants: Array<object> = [];
-    public showRoomSelection: boolean = true;
-    public showMeetingRoom: boolean = false;
+    public isPresenter: boolean = false;
     public user: object = {};
 
     constructor() {
@@ -27,7 +24,6 @@ class PresenterView extends ViewModelBase {
         this.userName = data.userName;
         this.roomName = data.roomName;
         this.audienceRoom = data.audienceRoom;
-        this.showRoomSelection = false;
         if (!this.roomName || !this.userName) {
             alert('Room and Name are required!');
         } else {
@@ -35,39 +31,34 @@ class PresenterView extends ViewModelBase {
                 event: 'joinRoom',
                 userName: this.userName,
                 roomName: this.roomName,
-                audienceRoom:this.audienceRoom
+                audienceRoom: this.audienceRoom,
+                isPresenter: this.isPresenter
             };
             this.sendMessage(message);
-            this.showRoomSelection = false;
-            this.showMeetingRoom = true;
             this.updateView();
         }
     }
 
-
-    receiveVideo(userid: string, username: string, isPresenter: boolean) {
-        const video = this.buildVideoElem(userid, username);
+    receiveVideo(userdata: any) {
+        if (!(this.isPresenter || userdata.isPresenter)) {
+            if (!(userdata.audienceRoom == this.audienceRoom)) return;
+        }
+        const userid = userdata.userid;
+        const username = userdata.username;
+        const isPresenter = userdata.isPresenter;
+        const audienceRoom = userdata.audienceRoom;
+        const video = this.buildVideoElem(userid, username, isPresenter, audienceRoom);
         const user: any = {
             id: userid,
             username: username,
             video: video,
-            rtcPeer: null
+            rtcPeer: null,
+            isPresenter,
+            audienceRoom
         };
         // @ts-ignore
         this.participants[user.id] = user;
-        const constraints = {
-            audio: true,
-            video: {
-                mandatory: {
-                    maxWidth: 240,
-                    minWidth: 240,
-                    maxHeight: 135,
-                    minHeight: 135,
-                    maxFrameRate: 15,
-                    minFrameRate: 15
-                }
-            }
-        };
+        const constraints = this.getVideoConstraints(isPresenter);
         const options = {
             remoteVideo: video,
             mediaConstraints: constraints,
@@ -103,12 +94,8 @@ class PresenterView extends ViewModelBase {
         };
     }
 
-    buildVideoElem(userid: string, username: string) {
+    buildVideoElem(userid: string, username: string, isPresenter: boolean, audienceRoom: string) {
         const video = document.createElement('video');
-        const videoContainer = document.createElement('div');
-        videoContainer.className = "videoContainer form-row col-md-4 col-sm-6 col-lg-3";
-        const centeredDiv = document.createElement('div');
-        centeredDiv.className = "mx-auto";
         const name = document.createElement('h3');
         name.className = "userName text-center";
         if (username === this.userName) name.className += ' curUser';
@@ -117,15 +104,56 @@ class PresenterView extends ViewModelBase {
         video.muted = true;
         video.setAttribute('webkit-playsinline', 'webkit-playsinline');
         name.appendChild(document.createTextNode(username));
-        centeredDiv.appendChild(video);
-        centeredDiv.appendChild(name);
-        videoContainer.appendChild(centeredDiv);
-        document.getElementById('meetingRoom')?.appendChild(videoContainer);
+        if (isPresenter) {
+            document.getElementById('presenterVideo')?.appendChild(video);
+            document.getElementById('presenterVideo')?.appendChild(name);
+        } else {
+            let videoContainer = document.getElementById(audienceRoom);
+            if (!videoContainer) {
+                videoContainer = document.createElement('div');
+                videoContainer.className = "col-md-12";
+                videoContainer.id = audienceRoom;
+            }
+            name.style.width = '160px';
+            videoContainer.appendChild(video);
+            videoContainer.appendChild(name);
+            document.getElementById('audienceRoom')?.appendChild(videoContainer);
+        }
         return video;
     }
 
-    onExistingParticipants(userid: string, existingUsers: Array<object>) {
-        const video = this.buildVideoElem(userid, this.userName);
+    getVideoConstraints(isPresenter: boolean) {
+        if (isPresenter) {
+            return {
+                audio: true,
+                video: {
+                    mandatory: {
+                        minHeight: 180,
+                        maxHeight: 180,
+                        minWidth: 320,
+                        maxWidth: 320
+                    }
+                }
+            }
+        }
+        return {
+            audio: true,
+            video: {
+                mandatory: {
+                    minHeight: 90,
+                    maxHeight: 90,
+                    minWidth: 160,
+                    maxWidth: 160
+                }
+            }
+        }
+    }
+
+    onExistingParticipants(message: any) {
+        const userid = message.userid;
+        const existingUsers = message.existingUsers;
+        this.isPresenter = message.isPresenter;
+        const video = this.buildVideoElem(userid, this.userName, message.isPresenter, message.audienceRoom);
         const user: any = {
             id: userid,
             username: this.userName,
@@ -135,18 +163,8 @@ class PresenterView extends ViewModelBase {
         this.user = user;
         this.updateView();
         this.participants[user.id] = user;
-        const constraints = {
-            audio: true,
-            video: {
-                mandatory: {
-                    minHeight: 180,
-                    maxHeight: 180,
-                    minWidth: 320,
-                    maxWidth: 320
-                }
-            }
-        };
-
+        const constraints = this.getVideoConstraints(message.isPresenter);
+        console.log(constraints, 'constraints');
         const options = {
             localVideo: video,
             mediaConstraints: constraints,
@@ -171,7 +189,13 @@ class PresenterView extends ViewModelBase {
             }
         );
         existingUsers.forEach((element: any) => {
-            this.receiveVideo(element.id, element.name, element.isPresenter);
+            const existingUserData = {
+                audienceRoom: element.audienceRoom,
+                userid: element.id,
+                isPresenter: element.isPresenter,
+                username: element.name
+            };
+            this.receiveVideo(existingUserData);
         });
         const onOffer = (err: any, offer: any, wp: any) => {
             const message = {
@@ -206,18 +230,20 @@ class PresenterView extends ViewModelBase {
 
     loadSocket() {
         socket.on('message', (message: any) => {
-            console.log('Message received: ' + message.event);
             switch (message.event) {
                 case 'newParticipantArrived':
-                    this.receiveVideo(message.userid, message.username, message.isPresenter);
+                    console.log(message, 'newParticipantArrived');
+                    this.receiveVideo(message);
                     break;
                 case 'existingParticipants':
-                    this.onExistingParticipants(message.userid, message.existingUsers);
+                    console.log(message, 'existingParticipants');
+                    this.onExistingParticipants(message);
                     break;
                 case 'receiveVideoAnswer':
                     this.onReceiveVideoAnswer(message.senderid, message.sdpAnswer);
                     break;
                 case 'candidate':
+
                     this.addIceCandidate(message.userid, message.candidate);
                     break;
                 case 'deleteUser':
@@ -227,6 +253,13 @@ class PresenterView extends ViewModelBase {
     }
 
     async componentDidMount() {
+        const urlParams = this.props.match.params;
+        const data = {
+            userName: urlParams['username'],
+            roomName: urlParams['id'],
+            audienceRoom: urlParams['audience_room']
+        };
+        this.joinRoom(data);
     }
 
     componentWillUnmount() {

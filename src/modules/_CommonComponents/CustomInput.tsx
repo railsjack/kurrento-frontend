@@ -14,7 +14,7 @@ const CustomInput = (props: any) => {
     return (
         <Row>
             <Col md="4" {...props.labelContainer}>
-                <Label size="sm" htmlFor={props.name}>{props.label}:</Label>
+                <Label size="sm" htmlFor={props.name} className={props.labelClass}>{props.label}:</Label>
             </Col>
             <Col xs="12" md="6" {...props.inputContainer}>
                 {type === 'textarea' && <textarea

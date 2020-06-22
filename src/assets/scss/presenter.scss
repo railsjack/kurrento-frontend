@@ -1,6 +1,12 @@
-#meetingRoom{
-  margin-top: 100px;
+#audienceRoom{
 }
 .curUser{
   color: red;
+}
+.presenter-jumbotron{
+  background-color:gray !important;
+}
+#presenterVideo video{
+  width: 100%    !important;
+  height: auto   !important;
 }

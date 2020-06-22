@@ -38,7 +38,7 @@ class LoginViewModel extends ViewModelBase {
                     const data = {user_id, email, name, picture, oauth_type, oauth_token, expiration_time, expires_in};
                     const serverResponse:any = await CallServerPromise.checkToken({data});
                     if (serverResponse.result === 'success'){
-                        window.location.pathname='/home';
+                        window.location.pathname='/events/list/';
                         // this.userDetails.setValue(data);
                         // console.log(this.userDetails.getValue())
                     }

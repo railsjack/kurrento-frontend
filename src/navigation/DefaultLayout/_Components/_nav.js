@@ -38,7 +38,7 @@ export default {
         {
             name: 'Rooms',
             icon: 'fa fa-video-camera',
-            url: '/presenters'
+            url: '/presenters/all/'
         }
     ]
 };

@@ -4,9 +4,11 @@ import {Button, Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane}
 import CustomInput from "../../_CommonComponents/CustomInput";
 import useOrganizationViewModel from "../ViewModels/Organizations/OrganizationsViewModel";
 import ImageUploader from "react-images-upload";
+import LoadingSpinner from "../../_CommonComponents/loading";
 
 const AddOrganization = (props: any) => {
     const view = useOrganizationViewModel({props});
+    view.selectedOrgId = props.match.params?.id;
     const orgInfo = view.orgInfo;
     const onEventInfoChanged = (e: any) => {
         const {name, value} = e.target;
@@ -18,8 +20,8 @@ const AddOrganization = (props: any) => {
     const onBgImgDrop = (pictureFiles: any, pictureDataURLs: any) => {
         orgInfo['bg_images'] = pictureDataURLs;
     };
+    if(view.loading) return <LoadingSpinner/>;
     return <>
-        <OsvNavbar/>
         <Container>
             <Row>
                 <Col sm={12} md={6} className={'offset-md-3 mt-5'}>

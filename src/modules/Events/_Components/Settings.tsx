@@ -7,6 +7,7 @@ const Settings = (props: any) => {
     const onEventInfoChanged = (e: any) => {
         const {name, value} = e.target;
         eventInfo[name] = value;
+        view.updateView();
     };
     return (<>
         <CustomInput.Radio

@@ -65,16 +65,6 @@ const ApplyUserNameForm = (props: any) => {
                                                }}/>
                                     </InputGroup>
 
-                                    <FormGroup row>
-                                        <Col md="4">
-                                            <Label>Is audience Manager?</Label>
-                                        </Col>
-                                        <Col md="8">
-                                            <FormGroup check className="checkbox">
-                                                <Input className="form-check-input" type="checkbox"/>
-                                            </FormGroup>
-                                        </Col>
-                                    </FormGroup>
                                     <Row>
                                         <Col xs="12">
                                             <Button color="primary" className="px-4"

@@ -67,9 +67,31 @@ class CallServerPromiseClass {
     deleteOrg(data: object) {
         return this.call_server_promise('org/deleteOrg', data);
     }
+
     getOrgDataById(data: object) {
         return this.call_server_promise('org/getOrgById', data);
     }
+
+    getOrgsForEvent(data: object) {
+        return this.call_server_promise('org/getOrgsForEvent', data);
+    }
+
+    listEvents(data: object) {
+        return this.call_server_promise('event/list', data);
+    }
+
+    saveEvent(data: object) {
+        return this.call_server_promise('event/save', data);
+    }
+
+    deleteEvent(data: object) {
+        return this.call_server_promise('event/delete', data);
+    }
+
+    getAllEvents() {
+        return this.call_server_promise('event/all',{},'GET')
+    }
+
 }
 
 export const CallServerPromise = new CallServerPromiseClass();

@@ -37,7 +37,7 @@ class DefaultHeader extends Component {
         </NavLink>
         <AppSidebarToggler className="d-md-down-none mr-auto" display="lg"/>
         <Nav className="ml-lg-5" navbar>
-          <strong>Welcome {userDetails.name}!</strong>
+          <strong>Welcome {userDetails?.name}!</strong>
           {/*<strong>{'Welcome, ' + (userData && userData.s_ScreenName)}</strong>*/}
           <DefaultHeaderDropdown onLogout={this.props.onLogout} accnt/>
         </Nav>
