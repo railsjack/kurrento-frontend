@@ -40,7 +40,7 @@ class EventsView extends ViewModelBase {
     }
 
     async deleteEvent(event_id: string) {
-        if (!confirm('Are you sure want to delete?')) return;
+        if (!window.confirm('Are you sure want to delete?')) return;
         const response: any = await CallServerPromise.deleteEvent({event_id});
         if (response.data.result === 'success') this.appToast.successMsg(response.data.msg);
         else this.appToast.errorMsg(response.data.msg);

@@ -55,7 +55,7 @@ class OrganizationView extends ViewModelBase {
     }
 
     async deleteOrg(org_id: number) {
-        if (!confirm('Are you sure want to delete?')) return;
+        if (!window.confirm('Are you sure want to delete?')) return;
         const response: any = await CallServerPromise.deleteOrg({org_id});
         if (response.result === 'success') {
             this.appToast.successMsg(response.msg);
