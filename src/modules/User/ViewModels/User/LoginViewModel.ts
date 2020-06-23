@@ -1,20 +1,14 @@
 import {Observable, useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
 import {ReactFacebookLoginInfo} from "react-facebook-login";
 import {CallServerPromise} from "../../../../utils/app/call_server";
-import userDetails from "../../__demo_data/userDetails";
 
 class LoginViewModel extends ViewModelBase {
     userDetails:Observable;
     constructor() {
         super();
         this.userDetails = new Observable(this,'userDetails',null);
-        this.setUserDetailsFunc();
-    }
-    setUserDetailsFunc(){
-        this.userDetails.setValue(userDetails);
     }
     componentClicked = () => {
-        console.log("component clicked");
     };
 
     loginInfoOrFailureResponse(response: ReactFacebookLoginInfo) {
@@ -39,8 +33,7 @@ class LoginViewModel extends ViewModelBase {
                     const serverResponse:any = await CallServerPromise.checkToken({data});
                     if (serverResponse.result === 'success'){
                         window.location.pathname='/events/list/';
-                        // this.userDetails.setValue(data);
-                        // console.log(this.userDetails.getValue())
+                        this.userDetails.setValue(data);
                     }
                 }
             }

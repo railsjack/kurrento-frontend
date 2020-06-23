@@ -59,14 +59,16 @@ const SignIn = (props: any) => {
                                             </Col>
                                             <Col xs="2">
                                                 <FacebookLogin
-                                                    appId={facebookAppId}
-                                                    autoLoad={true}
-                                                    fields="name,email,picture"
-                                                    onClick={view.componentClicked}
-                                                    size={'small'}
-                                                    callback={view.loginInfoOrFailureResponse}
+                                                    appId={facebookAppId} autoLoad={false} fields="name,email,picture"
+                                                    size={'small'} xfbml={true} icon={'fa fa-facebook'} textButton={''}
                                                     cssClass={'btn btn-facebook btn-brand mr-1 mb-1 btn-md'}
-                                                    icon={'fa fa-facebook'} textButton={''}
+                                                    onClick={(e) => {
+                                                        view.componentClicked(e)
+                                                    }}
+
+                                                    callback={(e) => {
+                                                        view.loginInfoOrFailureResponse(e)
+                                                    }}
                                                 />
                                             </Col>
                                             <Col xs="2">

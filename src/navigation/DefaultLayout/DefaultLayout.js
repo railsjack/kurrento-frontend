@@ -86,7 +86,7 @@ class DefaultLayout extends Component {
                       />
                     ) : null;
                   })}
-                  {/*<Redirect from="/" to="/presenters"/>*/}
+                  <Redirect from="/" to="/events/list/"/>
                 </Switch>
               </Suspense>
             </Container>

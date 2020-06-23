@@ -35,7 +35,6 @@ class OrganizationView extends ViewModelBase {
 
     async saveOrg(props: any) {
         const userDetails = Observable.getReduxValue('userDetails');
-
         const orgInfo = Object.assign(this.orgInfo, {owner_user_id: userDetails.user_id});
         const response = await CallServerPromise.saveOrg(orgInfo);
         if (response.data.result === 'success') {

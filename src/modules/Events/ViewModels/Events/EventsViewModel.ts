@@ -42,8 +42,14 @@ class EventsView extends ViewModelBase {
     async deleteEvent(event_id: string) {
         if (!window.confirm('Are you sure want to delete?')) return;
         const response: any = await CallServerPromise.deleteEvent({event_id});
-        if (response.data.result === 'success') this.appToast.successMsg(response.data.msg);
-        else this.appToast.errorMsg(response.data.msg);
+        if (response.result === 'success') {
+            const index = this.events.findIndex((item: any) => {
+                return item.event_id == event_id;
+            });
+            this.events.splice(index, 1);
+            this.updateView();
+            this.appToast.successMsg(response.msg);
+        } else this.appToast.errorMsg(response.msg);
     }
 
     onEventInfoChanged(e: any) {
@@ -96,13 +102,15 @@ class EventsView extends ViewModelBase {
         };
         if (!this.validEventData(data)) return;
         const response: any = await CallServerPromise.saveEvent(data);
-        if (response.data.result === 'success') this.appToast.successMsg(response.data.msg);
-        else this.appToast.errorMsg(response.data.msg)
+        if (response.data.result === 'success') {
+            this.props.history.push('/events/list/');
+            this.appToast.successMsg(response.data.msg);
+        } else this.appToast.errorMsg(response.data.msg)
     }
 
     liveEvent(event_id: string) {
         const userDetails = Observable.getReduxValue('userDetails');
-        console.log(userDetails,'userDetails');
+        console.log(userDetails, 'userDetails');
         this.props.history.push(`/events/${event_id}/${userDetails.name}/live/`);
     }
 

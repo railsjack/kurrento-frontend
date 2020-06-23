@@ -15,6 +15,11 @@ const List = (props: any) => {
                     {view.presenters && view.presenters.map((item: any, index:number) => {
                         return <PresenterWidget view={view} data={item} key={index}/>
                     })}
+                    {(!view.loading && view.presenters.length == 0) && (
+                        <Col md={8} sm={12} className={'offset-md-2 mt-5'}>
+                            <h1 className={'text-center'}>No event exists.</h1>
+                        </Col>
+                    )}
                 </Col>
             </Row>
         </Container>

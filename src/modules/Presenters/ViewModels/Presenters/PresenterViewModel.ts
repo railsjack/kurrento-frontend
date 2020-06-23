@@ -1,6 +1,7 @@
 import {useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
 import openSocket from 'socket.io-client';
-const uri:any = process.env.REACT_APP_API_URL;
+
+const uri: any = process.env.REACT_APP_API_URL;
 const socket = openSocket(uri);
 
 class PresenterView extends ViewModelBase {
@@ -128,10 +129,10 @@ class PresenterView extends ViewModelBase {
                 audio: true,
                 video: {
                     mandatory: {
-                        minHeight: 180,
-                        maxHeight: 180,
-                        minWidth: 320,
-                        maxWidth: 320
+                        minHeight: 270,
+                        maxHeight: 720,
+                        minWidth: 480,
+                        maxWidth: 1280
                     }
                 }
             }
@@ -152,6 +153,7 @@ class PresenterView extends ViewModelBase {
     onExistingParticipants(message: any) {
         const userid = message.userid;
         const existingUsers = message.existingUsers;
+        console.log(existingUsers, 'existingUsers');
         this.isPresenter = message.isPresenter;
         const video = this.buildVideoElem(userid, this.userName, message.isPresenter, message.audienceRoom);
         const user: any = {
@@ -220,12 +222,10 @@ class PresenterView extends ViewModelBase {
 
     deleteUser(message: any) {
         const videoElement = <HTMLVideoElement>document.getElementById(message.deleteUser);
-        if (videoElement) {
-            // @ts-ignore
-            videoElement.parentElement.parentElement.remove();
-            delete this.participants[message.deleteUser];
-            console.log(this.participants, 'this.participants');
-        }
+        const nameElement = document.querySelector('#' + message.deleteUser + '+h3');
+        if (videoElement) videoElement.remove();
+        if (nameElement) nameElement.remove();
+        delete this.participants[message.deleteUser];
     }
 
     loadSocket() {
