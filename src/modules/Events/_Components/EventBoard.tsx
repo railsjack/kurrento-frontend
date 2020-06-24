@@ -89,11 +89,6 @@ const EventBoard = (props: any) => {
                                                 onClick={(e) => view.deleteEvent(event.event_id)}>
                                             <i className={'fa fa-trash'}></i>&nbsp;&nbsp;Delete
                                         </Button>
-                                        <Button size={'md'} color={'success'}
-                                                className={'text-white pull-right mb-3 ml-3'}
-                                                onClick={(e) => view.liveEvent(event.event_id)}>
-                                            <i className={'icon icon-login'}></i>&nbsp;&nbsp;Go Live
-                                        </Button>
                                     </p>
                                 </FormGroup>
                             </CardBody>
