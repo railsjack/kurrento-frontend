@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Button, Card, CardBody, CardHeader, Col, Collapse, Fade, Jumbotron, Row, Input, FormGroup} from "reactstrap";
-import CustomInput from "../../_CommonComponents/CustomInput";
 import CopyToClipboard from "react-copy-to-clipboard"
 
 const EventBoard = (props: any) => {
@@ -75,7 +74,7 @@ const EventBoard = (props: any) => {
                                             <img src={event.default_video_watermark} width={75} height={'auto'}/>
                                         </Col>
                                         <Col md={3}>
-                                            <p className="text-center">Background Images:</p>
+                                            <p className="text-center">Background Image:</p>
                                         </Col>
                                         <Col md={3}>
                                             <img src={event.bg_image} width={75} height={'auto'}/>
