@@ -33,12 +33,6 @@ export default {
                     icon: 'nav-icon icon-list',
                 }
             ],
-        },
-
-        {
-            name: 'Rooms',
-            icon: 'fa fa-video-camera',
-            url: '/presenters/all/'
         }
     ]
 };

@@ -1,7 +1,8 @@
-import {useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
+import {Observable, useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
 import openSocket from 'socket.io-client';
 
 const uri: any = process.env.REACT_APP_API_URL;
+const audienceNumberPerRoom: any = process.env.REACT_AUDIENCE_NUMBER_PER_ROOM;
 const socket = openSocket(uri);
 
 class PresenterView extends ViewModelBase {
@@ -109,6 +110,9 @@ class PresenterView extends ViewModelBase {
             document.getElementById('presenterVideo')?.appendChild(video);
             document.getElementById('presenterVideo')?.appendChild(name);
         } else {
+            let participantContainer = document.createElement('div');
+            participantContainer.style.width = '160px';
+            participantContainer.style.display = 'inline-block';
             let videoContainer = document.getElementById(audienceRoom);
             if (!videoContainer) {
                 videoContainer = document.createElement('div');
@@ -116,9 +120,10 @@ class PresenterView extends ViewModelBase {
                 videoContainer.id = audienceRoom;
             }
             name.style.width = '160px';
-            videoContainer.appendChild(video);
-            videoContainer.appendChild(name);
-            document.getElementById('audienceRoom')?.appendChild(videoContainer);
+            participantContainer.appendChild(video);
+            participantContainer.appendChild(name);
+            console.log(name,'nameElement');
+            document.getElementById('audienceRoom')?.appendChild(participantContainer);
         }
         return video;
     }
@@ -153,7 +158,6 @@ class PresenterView extends ViewModelBase {
     onExistingParticipants(message: any) {
         const userid = message.userid;
         const existingUsers = message.existingUsers;
-        console.log(existingUsers, 'existingUsers');
         this.isPresenter = message.isPresenter;
         const video = this.buildVideoElem(userid, this.userName, message.isPresenter, message.audienceRoom);
         const user: any = {
@@ -222,7 +226,7 @@ class PresenterView extends ViewModelBase {
 
     deleteUser(message: any) {
         const videoElement = <HTMLVideoElement>document.getElementById(message.deleteUser);
-        const nameElement = document.querySelector('#' + message.deleteUser + '+h3');
+        const nameElement = document.getElementById(`${message.deleteUser}`)?.nextElementSibling;
         if (videoElement) videoElement.remove();
         if (nameElement) nameElement.remove();
         delete this.participants[message.deleteUser];
@@ -253,13 +257,7 @@ class PresenterView extends ViewModelBase {
     }
 
     async componentDidMount() {
-        const urlParams = this.props.match.params;
-        const data = {
-            userName: urlParams['username'],
-            roomName: urlParams['id'],
-            audienceRoom: urlParams['audience_room']
-        };
-        this.joinRoom(data);
+        this.joinRoom(this.props.data);
     }
 
     componentWillUnmount() {

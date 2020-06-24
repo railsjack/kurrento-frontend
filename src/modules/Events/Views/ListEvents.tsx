@@ -8,7 +8,7 @@ const ListEvents = (props: any) => {
     const view = useEventsViewModel({props});
     if (view.loading) return <LoadingSpinner/>;
     return (
-        <Container>
+        <Container fluid>
             <Row>
                 {view.events && view.events.map((item: any, index: any) => {
                     return <EventBoard key={index} data={item} view={view}/>

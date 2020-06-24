@@ -15,16 +15,20 @@ class EventsView extends ViewModelBase {
         super();
         this.eventInfo = new Event();
         this.appToast = new AppToast();
-        this.loadOrgs();
     }
 
     async loadOrgs() {
         const userDetails = Observable.getReduxValue('userDetails');
         const response = await CallServerPromise.getOrgsForEvent({user_id: userDetails.user_id});
-        if (response.data) {
-            response.data.forEach((item: any, index: number) => {
-                this.organizations[index] = {text: item['name'], value: item['org_id']}
+        const orgs = response.data;
+        if (orgs) {
+            orgs.forEach((item: any, index: number) => {
+                item['text'] = item['name'];
+                item['value'] = item['org_id'];
+                delete item['name'];
+                delete item['org_id'];
             });
+            this.organizations = orgs;
         }
         this.updateView()
     }
@@ -115,6 +119,7 @@ class EventsView extends ViewModelBase {
     }
 
     async componentDidMount() {
+        this.loadOrgs();
         this.loadEvents()
     }
 

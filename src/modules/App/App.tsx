@@ -13,7 +13,8 @@ import store, {persistor} from '../../config/redux/store';
 import './scss/App.scss';
 
 const PresenterList = React.lazy(() => import('../Presenters/Views/List'));
-const PresenterRoom = React.lazy(() => import('../Presenters/Views/Room'));
+const PresenterRoom = React.lazy(() => import('../Presenters/Views/PresenterRoom'));
+const ParticipantRoom = React.lazy(() => import('../Presenters/Views/ParticipantRoom'));
 
 const SignIn = React.lazy(() => import('../User/Views/Login'));
 
@@ -39,8 +40,10 @@ class App extends Component {
                                        render={(props: any) => <SignIn {...props}/>}/>
                                 <Route exact path="/presenters/all" name="Presenter List"
                                        render={(props: any) => <PresenterList {...props}/>}/>
-                                <Route exact path="/presenters/:id/:username/:audience_room/live" name="Presenter Room"
+                                <Route exact path="/_PRESENT_/:id" name="Presenter Room"
                                        render={(props: any) => <PresenterRoom {...props}/>}/>
+                                <Route exact path="/event/:id" name="Participant Room"
+                                       render={(props: any) => <ParticipantRoom {...props}/>}/>
                                 <Route auth="true" path="/" name="Home"
                                        render={(props: any) => <DefaultLayout {...props}/>}/>
                             </Switch>

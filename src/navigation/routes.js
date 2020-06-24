@@ -2,7 +2,7 @@ import React from 'react';
 
 const AddEvent = React.lazy(() => import('../modules/Events/Views/AddEvents'));
 const ListEvents = React.lazy(() => import('../modules/Events/Views/ListEvents'));
-const EventRoom = React.lazy(() => import('../modules/Presenters/Views/Room'));
+const EventRoom = React.lazy(() => import('../modules/Presenters/_Components/Room'));
 const Home = React.lazy(() => import('../modules/Home/Views/Home'));
 const AddOrganization = React.lazy(() => import('../modules/Organizations/Views/AddOrganization'));
 const ListOrganization = React.lazy(() => import('../modules/Organizations/Views/ListOrganization'));

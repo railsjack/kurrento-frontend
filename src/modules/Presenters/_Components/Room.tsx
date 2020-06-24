@@ -1,14 +1,24 @@
-import React, {useEffect} from 'react'
-import {Col, Row} from "reactstrap";
+import React from "react";
+// @ts-ignore
+import {Container, Row, Col} from 'reactstrap';
+import usePresenterViewModel from '../ViewModels/Presenters/PresenterViewModel';
+import '../../../assets/scss/presenter.scss'
 
 const Room = (props: any) => {
-    console.log(props.data);
+    const view = usePresenterViewModel({props});
     return (
-        <Col md={4}>
-            <div className="embed-responsive embed-responsive-16by9">
-                <video autoPlay={true} muted={true} id={props.data.id}></video>
-            </div>
-        </Col>
-    )
+        <>
+            <Container>
+                <Row>
+                    <Col md={8} className={'offset-md-2'} style={{marginTop:'50px',marginBottom:'50px'}}>
+                        <div id="presenterVideo"></div>
+                    </Col>
+                    <Col md={8} className={'offset-md-2'}>
+                        <div id="audienceRoom"></div>
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    );
 };
 export default Room;
