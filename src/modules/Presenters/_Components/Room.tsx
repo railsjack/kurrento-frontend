@@ -8,16 +8,12 @@ const Room = (props: any) => {
     const view = usePresenterViewModel({props});
     return (
         <>
-            <Container>
-                <Row>
-                    <Col md={8} className={'offset-md-2'} style={{marginTop:'50px',marginBottom:'50px'}}>
-                        <div id="presenterVideo"></div>
-                    </Col>
-                    <Col md={8} className={'offset-md-2'}>
-                        <div id="audienceRoom"></div>
-                    </Col>
-                </Row>
-            </Container>
+            <Col md={12} className="pl-0 pr-0">
+                <div id="presenterVideo"/>
+            </Col>
+            <Col md={12} className={'pl-0 pr-0'}>
+                <div id="audienceRoom"/>
+            </Col>
         </>
     );
 };

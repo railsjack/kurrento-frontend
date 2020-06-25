@@ -7,16 +7,21 @@ import ParticipantInfo from '../_Components/ParticipantInfo';
 const ParticipantRoom = (props: any) => {
     const view = useParticipantViewModel({props});
     const urlParams = props.match.params;
+
+    // const currentDate = String(Date.now());
+    //
+    // view.username = 'user' + currentDate.slice(currentDate.length - 2, currentDate.length);
+
     const data = {
         userName: view.username,
-        roomName: urlParams['id'],
-        audienceRoom:process.env.REACT_APP_AUDIENCE_NUMBER_PER_ROOM
+        roomName: urlParams['id']
     };
+    // view.joinRoom()
     return (
         <>
             {!view.showRoom &&
             <Container fluid>
-                <Row style={{marginTop: '30vh'}}>
+                <Row style={{marginTop:'30vh'}}>
                     <ParticipantInfo view={view} onSubmit={(e: any) => {
                         console.log(e)
                     }}/>

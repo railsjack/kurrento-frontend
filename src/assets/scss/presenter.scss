@@ -7,6 +7,59 @@
   background-color:gray !important;
 }
 #presenterVideo video{
-  width: 100%    !important;
-  height: auto   !important;
+  height: calc(100vh);
+  width: 100%;
+  object-fit: fill;
+  position: absolute;
+}
+#audienceRoom{
+  width: 100%;
+  position: absolute;
+  margin-top :calc(100vh - 90px);
+  height: 90px;
+}
+.participantContainer{
+  width: 160px;
+  height: 90px !important;
+  display: inline-block;
+}
+.participantInfoVideo{
+  width: 240px;
+  height: 135px;
+  margin-top: 75px;
+  border: solid 3px #000;
+  object-fit: fill;
+}
+@media screen and (max-width: 768px){
+  .participantInfoVideo{
+    margin-left: calc((100% - 240px)/2);
+  }
+}
+.participantInfoBoard{
+  background-color:black;
+  height:300px;
+  padding: 30px;
+  .divider{
+    border: solid 1px #444;
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+  .btn-facebook, input, button{
+    margin-left: 25%;
+    width: 50%;
+    @media screen and (max-width: 1280px){
+      width: 70%;
+      margin-left: 15%;
+    }
+  }
+  ::placeholder{
+    text-align: center;
+  }
+  .btn-facebook{
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  input, button{
+    margin-top:15px
+  }
 }

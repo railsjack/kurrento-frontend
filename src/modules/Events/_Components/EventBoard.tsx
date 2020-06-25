@@ -10,7 +10,7 @@ const EventBoard = (props: any) => {
     const [collapse, setCollapse] = useState(true);
     return (
         <>
-            <Col sm={6} md={6} className={'mt-5'}>
+            <Col sm={12} md={6} className={'mt-5'}>
                 <Fade timeout={timeout} in={fadeIn}>
                     <Card>
                         <CardHeader>
@@ -20,10 +20,10 @@ const EventBoard = (props: any) => {
                             <CardBody>
                                 <FormGroup>
                                     <Row>
-                                        <Col md={3}>
+                                        <Col md={2} xs={2}>
                                             <p className="text-center">Presenter URL:</p>
                                         </Col>
-                                        <Col md={3}>
+                                        <Col md={4} xs={4}>
                                             <CopyToClipboard
                                                 text={`https://video.zuluvideo.com/_PRESENT_/${event.event_id}`}
                                                 onCopy={() => view.appToast.successMsg('Successfully Copied !')}>
@@ -34,7 +34,7 @@ const EventBoard = (props: any) => {
                                                     href={`/_PRESENT_/${event.event_id}`}>
                                                 <i className={'fa fa-window-restore'}/></Button>
                                         </Col>
-                                        <Col md={6}>
+                                        <Col md={6} xs={6}>
                                             <Input type="text"
                                                    value={`https://video.zuluvideo.com/_PRESENT_/${event.event_id}`}
                                                    disabled={true}/>
@@ -43,10 +43,10 @@ const EventBoard = (props: any) => {
                                 </FormGroup>
                                 <FormGroup>
                                     <Row>
-                                        <Col md={3}>
+                                        <Col md={2} xs={2}>
                                             <p className="text-center">Participant URL:</p>
                                         </Col>
-                                        <Col md={3}>
+                                        <Col md={4} xs={4}>
                                             <CopyToClipboard
                                                 text={`https://video.zuluvideo.com/event/${event.event_id}`}
                                                 onCopy={() => view.appToast.successMsg('Successfully Copied !')}>
@@ -58,7 +58,7 @@ const EventBoard = (props: any) => {
                                                 <i className={'fa fa-window-restore'}/>
                                             </Button>
                                         </Col>
-                                        <Col md={6}>
+                                        <Col md={6} xs={6}>
                                             <Input type="text"
                                                    value={`https://video.zuluvideo.com/event/${event.event_id}`}
                                                    disabled={true}/>
@@ -67,16 +67,16 @@ const EventBoard = (props: any) => {
                                 </FormGroup>
                                 <FormGroup>
                                     <Row>
-                                        <Col md={3}>
+                                        <Col md={3} xs={3}>
                                             <p className="text-center">Video watermark:</p>
                                         </Col>
-                                        <Col md={3}>
+                                        <Col md={3} xs={3}>
                                             <img src={event.default_video_watermark} width={75} height={'auto'}/>
                                         </Col>
-                                        <Col md={3}>
+                                        <Col md={3} xs={3}>
                                             <p className="text-center">Background Image:</p>
                                         </Col>
-                                        <Col md={3}>
+                                        <Col md={3} xs={3}>
                                             <img src={event.bg_image} width={75} height={'auto'}/>
                                         </Col>
                                     </Row>

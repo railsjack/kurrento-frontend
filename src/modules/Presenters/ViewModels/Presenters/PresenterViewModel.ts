@@ -8,11 +8,11 @@ const socket = openSocket(uri);
 class PresenterView extends ViewModelBase {
     public roomName: string = '';
     public userName: string = '';
-    public audienceRoom: string = '';
-    public participants: Array<object> = [];
+    public audienceRoom: number = 2;
+    public participants: any = {};
     public isPresenter: boolean = false;
     public user: object = {};
-
+    public audienceRoomMemberCount:any = process.env.REACT_APP_AUDIENCE_NUMBER_PER_ROOM;
     constructor() {
         super();
         this.loadSocket();
@@ -20,6 +20,8 @@ class PresenterView extends ViewModelBase {
 
     sendMessage(message: any) {
         socket.emit('message', message);
+    }
+    generateAudienceRoomNumber(){
     }
 
     joinRoom(data: any) {
@@ -43,7 +45,7 @@ class PresenterView extends ViewModelBase {
 
     receiveVideo(userdata: any) {
         if (!(this.isPresenter || userdata.isPresenter)) {
-            if (!(userdata.audienceRoom == this.audienceRoom)) return;
+            // if (!(userdata.audienceRoom == this.audienceRoom)) return;
         }
         const userid = userdata.userid;
         const username = userdata.username;
@@ -108,21 +110,19 @@ class PresenterView extends ViewModelBase {
         name.appendChild(document.createTextNode(username));
         if (isPresenter) {
             document.getElementById('presenterVideo')?.appendChild(video);
-            document.getElementById('presenterVideo')?.appendChild(name);
+            // document.getElementById('presenterVideo')?.appendChild(name);
         } else {
             let participantContainer = document.createElement('div');
-            participantContainer.style.width = '160px';
-            participantContainer.style.display = 'inline-block';
+            participantContainer.className ='participantContainer';
             let videoContainer = document.getElementById(audienceRoom);
             if (!videoContainer) {
                 videoContainer = document.createElement('div');
                 videoContainer.className = "col-md-12";
                 videoContainer.id = audienceRoom;
             }
-            name.style.width = '160px';
+            // name.style.width = '160px';
             participantContainer.appendChild(video);
-            participantContainer.appendChild(name);
-            console.log(name,'nameElement');
+            // participantContainer.appendChild(name);
             document.getElementById('audienceRoom')?.appendChild(participantContainer);
         }
         return video;
@@ -135,9 +135,7 @@ class PresenterView extends ViewModelBase {
                 video: {
                     mandatory: {
                         minHeight: 270,
-                        maxHeight: 720,
-                        minWidth: 480,
-                        maxWidth: 1280
+                        minWidth: 480
                     }
                 }
             }
@@ -158,6 +156,7 @@ class PresenterView extends ViewModelBase {
     onExistingParticipants(message: any) {
         const userid = message.userid;
         const existingUsers = message.existingUsers;
+        console.log(existingUsers,'existingUsers');
         this.isPresenter = message.isPresenter;
         const video = this.buildVideoElem(userid, this.userName, message.isPresenter, message.audienceRoom);
         const user: any = {
@@ -170,7 +169,6 @@ class PresenterView extends ViewModelBase {
         this.updateView();
         this.participants[user.id] = user;
         const constraints = this.getVideoConstraints(message.isPresenter);
-        console.log(constraints, 'constraints');
         const options = {
             localVideo: video,
             mediaConstraints: constraints,
@@ -225,10 +223,8 @@ class PresenterView extends ViewModelBase {
     }
 
     deleteUser(message: any) {
-        const videoElement = <HTMLVideoElement>document.getElementById(message.deleteUser);
-        const nameElement = document.getElementById(`${message.deleteUser}`)?.nextElementSibling;
-        if (videoElement) videoElement.remove();
-        if (nameElement) nameElement.remove();
+        const videoDiv = <HTMLVideoElement>document.getElementById(message.deleteUser)?.parentElement;
+        if (videoDiv) videoDiv.remove();
         delete this.participants[message.deleteUser];
     }
 
@@ -240,7 +236,6 @@ class PresenterView extends ViewModelBase {
                     this.receiveVideo(message);
                     break;
                 case 'existingParticipants':
-                    console.log(message, 'existingParticipants');
                     this.onExistingParticipants(message);
                     break;
                 case 'receiveVideoAnswer':
@@ -257,7 +252,9 @@ class PresenterView extends ViewModelBase {
     }
 
     async componentDidMount() {
-        this.joinRoom(this.props.data);
+        const {userName, roomName} = this.props.data;
+        const data = {userName, roomName, audienceRoom: this.audienceRoom};
+        this.joinRoom(data);
     }
 
     componentWillUnmount() {
