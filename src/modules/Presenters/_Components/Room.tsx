@@ -1,10 +1,11 @@
 import React from "react";
 // @ts-ignore
-import {Container, Row, Col} from 'reactstrap';
+import {Col} from 'reactstrap';
 import usePresenterViewModel from '../ViewModels/Presenters/PresenterViewModel';
 import '../../../assets/scss/presenter.scss'
 
 const Room = (props: any) => {
+    console.log('hey there...')
     const view = usePresenterViewModel({props});
     return (
         <>

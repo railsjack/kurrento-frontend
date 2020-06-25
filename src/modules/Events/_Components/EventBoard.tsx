@@ -10,7 +10,7 @@ const EventBoard = (props: any) => {
     const [collapse, setCollapse] = useState(true);
     return (
         <>
-            <Col sm={12} md={6} className={'mt-5'}>
+            <Col lg={12} xl={6} className={'mt-5'}>
                 <Fade timeout={timeout} in={fadeIn}>
                     <Card>
                         <CardHeader>

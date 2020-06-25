@@ -1,18 +1,20 @@
-import {Observable, useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
+import {Observable, useViewModel} from "../../../_CommonModels/ViewModelBase";
 import openSocket from 'socket.io-client';
+import CommonPresenterViewModel from "../CommonPresenterViewModel";
 
 const uri: any = process.env.REACT_APP_API_URL;
 const audienceNumberPerRoom: any = process.env.REACT_AUDIENCE_NUMBER_PER_ROOM;
 const socket = openSocket(uri);
 
-class PresenterView extends ViewModelBase {
+class PresenterView extends CommonPresenterViewModel {
     public roomName: string = '';
     public userName: string = '';
     public audienceRoom: number = 2;
     public participants: any = {};
     public isPresenter: boolean = false;
     public user: object = {};
-    public audienceRoomMemberCount:any = process.env.REACT_APP_AUDIENCE_NUMBER_PER_ROOM;
+    public audienceRoomMemberCount: any = process.env.REACT_APP_AUDIENCE_NUMBER_PER_ROOM;
+
     constructor() {
         super();
         this.loadSocket();
@@ -21,7 +23,8 @@ class PresenterView extends ViewModelBase {
     sendMessage(message: any) {
         socket.emit('message', message);
     }
-    generateAudienceRoomNumber(){
+
+    generateAudienceRoomNumber() {
     }
 
     joinRoom(data: any) {
@@ -109,11 +112,15 @@ class PresenterView extends ViewModelBase {
         video.setAttribute('webkit-playsinline', 'webkit-playsinline');
         name.appendChild(document.createTextNode(username));
         if (isPresenter) {
+            this.loadEventInfo(this.props.data.roomName)
+                .then(data => {
+                    this.setBodyBg()
+                });
             document.getElementById('presenterVideo')?.appendChild(video);
             // document.getElementById('presenterVideo')?.appendChild(name);
         } else {
             let participantContainer = document.createElement('div');
-            participantContainer.className ='participantContainer';
+            participantContainer.className = 'participantContainer';
             let videoContainer = document.getElementById(audienceRoom);
             if (!videoContainer) {
                 videoContainer = document.createElement('div');
@@ -156,7 +163,7 @@ class PresenterView extends ViewModelBase {
     onExistingParticipants(message: any) {
         const userid = message.userid;
         const existingUsers = message.existingUsers;
-        console.log(existingUsers,'existingUsers');
+        console.log(existingUsers, 'existingUsers');
         this.isPresenter = message.isPresenter;
         const video = this.buildVideoElem(userid, this.userName, message.isPresenter, message.audienceRoom);
         const user: any = {
