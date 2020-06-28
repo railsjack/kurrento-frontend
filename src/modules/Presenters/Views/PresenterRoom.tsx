@@ -1,35 +1,33 @@
 import React from 'react';
-import Room from '../_Components/Room';
-import {Observable} from "../../_CommonModels/ViewModelBase";
-import '../../../assets/scss/presenter.scss'
-import {Container, Row, Col} from "reactstrap";
-import PresenterVideo from '../_Components/Presenter/PresenterVideo';
-import RoomNumberContainer from "../_Components/Presenter/RoomNumberContainer";
-import AudienceContainer from "../_Components/Presenter/AudienceContainer";
+import {Col, Row} from "reactstrap";
+import PresenterRoomInfo from "./_Components/PresenterRoomInfo";
+import PresenterCamera from "./_Components/PresenterCamera";
+import ParticipantCameraList from "./_Components/ParticipantCameraList";
+import usePresentRoomViewModel from '../ViewModels/Presenters/PresenterRoomViewModel'
 
 const PresenterRoom = (props: any) => {
-    const urlParams = props.match.params;
-    const userDetails = Observable.getReduxValue('userDetails');
-    const data = {
-        userName: userDetails['name'],
-        roomName: urlParams['id']
-    };
-    return (
-        <>
-            <Container fluid className={'pt-5'}>
-                <Row>
-                    <Col md={3}>
-                        <PresenterVideo/>
-                    </Col>
-                    <Col md={8} className="offset-md-1">
-                        <RoomNumberContainer/>
-                    </Col>
-                    <Col md={12}>
-                        <AudienceContainer/>
-                    </Col>
-                </Row>
-            </Container>
-        </>
-    )
-};
+  const view = usePresentRoomViewModel({props, initialCount: 1});
+  const audienceRooms = view.audienceRooms;
+  const totalPresenters = 34;
+  const currentPresenters = 12;
+  return (
+    <>
+      <Row>
+        <Col>
+          <PresenterCamera/>
+          <PresenterRoomInfo
+            view={view}
+            totalPresenters={totalPresenters} currentPresenters={currentPresenters}
+            audienceRooms={audienceRooms}/>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ParticipantCameraList audienceRooms={audienceRooms}/>
+        </Col>
+      </Row>
+    </>
+  );
+}
+
 export default PresenterRoom;

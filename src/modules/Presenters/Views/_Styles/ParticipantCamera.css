@@ -1,0 +1,9 @@
+.participant-camera {
+    background-color: #dfdfdf;
+    float: left;
+    width: 120px;
+    height: 80px;
+    font-size: 12pt;
+    margin-left: 1px;
+    margin-top: 1px;
+}
