@@ -52,7 +52,7 @@ class CallServerPromiseClass {
         });
     }
 
-    checkToken(data: object) {
+    doLogin(data: object) {
         return this.call_server_promise('auth/facebook', data);
     }
 

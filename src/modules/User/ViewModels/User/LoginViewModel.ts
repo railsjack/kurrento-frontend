@@ -3,11 +3,13 @@ import {ReactFacebookLoginInfo} from "react-facebook-login";
 import {CallServerPromise} from "../../../../utils/app/call_server";
 
 class LoginViewModel extends ViewModelBase {
-    userDetails:Observable;
+    userDetails: Observable;
+
     constructor() {
         super();
-        this.userDetails = new Observable(this,'userDetails',null);
+        this.userDetails = new Observable(this, 'userDetails', null);
     }
+
     componentClicked = () => {
     };
 
@@ -30,9 +32,9 @@ class LoginViewModel extends ViewModelBase {
                     // @ts-ignore
                     const expires_in = response.expiresIn;
                     const data = {user_id, email, name, picture, oauth_type, oauth_token, expiration_time, expires_in};
-                    const serverResponse:any = await CallServerPromise.checkToken({data});
-                    if (serverResponse.result === 'success'){
-                        window.location.pathname='/events/list/';
+                    const serverResponse: any = await CallServerPromise.doLogin({data});
+                    if (serverResponse.result === 'success') {
+                        this.props.history.push('/events/list/');
                         this.userDetails.setValue(data);
                     }
                 }

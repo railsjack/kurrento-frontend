@@ -13,7 +13,6 @@ class PresenterView extends CommonPresenterViewModel {
     public participants: any = {};
     public isPresenter: boolean = false;
     public user: object = {};
-    public audienceRoomMemberCount: any = process.env.REACT_APP_AUDIENCE_NUMBER_PER_ROOM;
 
     constructor() {
         super();

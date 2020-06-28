@@ -32,8 +32,9 @@ class DefaultLayout extends Component {
 
   signOut(e) {
     e.preventDefault();
-    this.props.history.push("/login");
-    this.props.dispatch(actions.authLogout());
+    if(window.FB) window.FB.logout();
+    this.props.history.push("/signin");
+    // this.props.dispatch(actions.authLogout());
   }
   removeASidebar() {
     document.body.classList.remove('aside-menu-lg-show');

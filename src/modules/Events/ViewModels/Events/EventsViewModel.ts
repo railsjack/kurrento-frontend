@@ -79,10 +79,10 @@ class EventsView extends ViewModelBase {
             this.appToast.errorMsg('Please enter the password!');
             return false;
         }
-        if (!data.start_time) {
-            this.appToast.errorMsg('Start time is required!');
-            return false;
-        }
+        // if (!data.start_time) {
+        //     this.appToast.errorMsg('Start time is required!');
+        //     return false;
+        // }
         if (!data.watermark_position) {
             this.appToast.errorMsg('Please select the watermark position!');
             return false;
@@ -119,8 +119,8 @@ class EventsView extends ViewModelBase {
     }
 
     async componentDidMount() {
+        if (this.props.history.location.pathname.includes('events/list')) return this.loadEvents();
         this.loadOrgs();
-        this.loadEvents()
     }
 
     componentWillUnmount() {

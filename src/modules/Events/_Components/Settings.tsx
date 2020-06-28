@@ -22,11 +22,11 @@ const Settings = (props: any) => {
             label='Password' name='attendance_password' value={''}
             onChange={onEventInfoChanged}/>
         }
-        <CustomInput.Date
-            type={'date'}
-            prefix={'event'}
-            label='Next curtain' name='start_time' value={''}
-            onChange={onEventInfoChanged}/>
+        {/*<CustomInput.Date*/}
+        {/*    type={'date'}*/}
+        {/*    prefix={'event'}*/}
+        {/*    label='Next curtain' name='start_time' value={''}*/}
+        {/*    onChange={onEventInfoChanged}/>*/}
 
     </>)
 

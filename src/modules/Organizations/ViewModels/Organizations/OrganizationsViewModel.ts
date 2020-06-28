@@ -6,7 +6,7 @@ import AppToast from "../../../../utils/misc/app_toast";
 class OrganizationView extends ViewModelBase {
 
     orgInfo: Organization;
-    loading: boolean = true;
+    loading: boolean = false;
     organizations: Array<Organization> = [];
     appToast: AppToast;
     selectedOrgId: string = '';
@@ -19,10 +19,8 @@ class OrganizationView extends ViewModelBase {
     }
 
     async componentDidMount() {
-        if (this.selectedOrgId) {
-            return this.getOrgDataById(this.selectedOrgId);
-        }
-        this.listOrgs();
+        if (this.selectedOrgId) return this.getOrgDataById(this.selectedOrgId);
+        if (this.props.history.location.pathname.includes('organization/list')) this.listOrgs();
     }
 
     async getOrgDataById(id: any) {
