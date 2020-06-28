@@ -1,0 +1,33 @@
+.info {
+    background-color: #e0e0e0;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.numbers {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.buttons-list {
+    margin-left: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.actions-list-item {
+    list-style: none;
+    padding: 0;
+    float: left;
+}
+
+.actions-list-item ~ .actions-list-item {
+    margin-left: 10px;
+}
+
+.actions-list-item-button {
+    cursor: pointer;
+}
+

@@ -1,0 +1,16 @@
+.toggle::selection {
+    color: transparent!important;
+}
+.toggle:focus {
+    outline-color: transparent;
+}
+.toggle {
+    width: 50px;
+    height: 40px;
+    background-color: #dcdcdc;
+    border: solid 1px #999999;
+    font-size: 14pt;
+}
+.toggle-on {
+    border: solid 5px #2b61a6;
+}
