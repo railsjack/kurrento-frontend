@@ -94,6 +94,9 @@ class CallServerPromiseClass {
     getEventById(id:number){
         return this.call_server_promise(`event/${id}/get`,{},'GET')
     }
+    checkPresenter(user_id:number, event_id:number){
+        return this.call_server_promise(`event/checkPresenter`,{user_id,event_id})
+    }
 }
 
 export const CallServerPromise = new CallServerPromiseClass();

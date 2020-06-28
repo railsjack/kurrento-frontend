@@ -1,10 +1,11 @@
 import {Observable, useViewModel} from "../../../_CommonModels/ViewModelBase";
 import openSocket from 'socket.io-client';
 import CommonPresenterViewModel from "../CommonPresenterViewModel";
+import {CallServerPromise} from "../../../../utils/app/call_server";
 
 const uri: any = process.env.REACT_APP_API_URL;
-const audienceNumberPerRoom: any = process.env.REACT_AUDIENCE_NUMBER_PER_ROOM;
 const socket = openSocket(uri);
+const audienceNumberPerRoom: any = process.env.REACT_AUDIENCE_NUMBER_PER_ROOM;
 
 class PresenterView extends CommonPresenterViewModel {
     public roomName: string = '';
@@ -27,18 +28,16 @@ class PresenterView extends CommonPresenterViewModel {
     }
 
     joinRoom(data: any) {
-        this.userName = data.userName;
-        this.roomName = data.roomName;
-        this.audienceRoom = data.audienceRoom;
-        if (!this.roomName || !this.userName) {
+        const {username, roomname, isPresenter, userid} = data;
+        if (!roomname || !username) {
             alert('Room and Name are required!');
         } else {
             const message = {
                 event: 'joinRoom',
-                userName: this.userName,
-                roomName: this.roomName,
-                audienceRoom: this.audienceRoom,
-                isPresenter: this.isPresenter
+                username: username,
+                roomname: roomname,
+                userid: userid,
+                isPresenter: isPresenter
             };
             this.sendMessage(message);
             this.updateView();
@@ -49,10 +48,8 @@ class PresenterView extends CommonPresenterViewModel {
         if (!(this.isPresenter || userdata.isPresenter)) {
             // if (!(userdata.audienceRoom == this.audienceRoom)) return;
         }
-        const userid = userdata.userid;
-        const username = userdata.username;
-        const isPresenter = userdata.isPresenter;
-        const audienceRoom = userdata.audienceRoom;
+        console.log(userdata.isPresenter, 'this.isPresenter')
+        const {userid, username, isPresenter, audienceRoom} = userdata;
         const video = this.buildVideoElem(userid, username, isPresenter, audienceRoom);
         const user: any = {
             id: userid,
@@ -258,8 +255,9 @@ class PresenterView extends CommonPresenterViewModel {
     }
 
     async componentDidMount() {
-        const {userName, roomName} = this.props.data;
-        const data = {userName, roomName, audienceRoom: this.audienceRoom};
+        const {username, roomname, userid, isPresenter} = this.props.data;
+        this.roomName = roomname;
+        const data = {username, roomname, userid, isPresenter};
         this.joinRoom(data);
     }
 
