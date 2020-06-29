@@ -20,8 +20,8 @@ const PresenterRoom = (props: any) => {
         userid = userDetails['user_id'];
         roomname = urlParams['id'];
         const data = {username, roomname, userid, isPresenter};
-        const propsParams = Object.assign({},props,{data});
-        const view = usePresenterViewModel({props:propsParams});
+        const propsParams = Object.assign({}, props, {data});
+        const view = usePresenterViewModel({props: propsParams});
         return (
             <>
                 <PresenterRoomView participants={view.participants}/>
@@ -38,17 +38,19 @@ const PresenterRoomView = (props: any) => {
     let audienceRooms = view.audienceRooms;
     const totalPresenters = 34;
     const currentPresenters = 12;
-    const presentersAry:any = [];
-    Object.keys(props.participants).forEach((item, index)=>{
-        if(props.participants[item]['isPresenter'])  {
+    const presentersAry: any = [];
+    const participantsAry: any = [];
+    Object.keys(props.participants).forEach((item, index) => {
+        if (props.participants[item]['isPresenter']) {
             presentersAry.push(props.participants[item])
-        }else{
-            audienceRooms[0].participants.push(props.participants[item]);
+        } else {
+            participantsAry.push(props.participants[item]);
         }
     });
-    useEffect(()=>{
+    if (audienceRooms[0]) audienceRooms[0]["participants"] = participantsAry;
+    useEffect(() => {
         view.updateView()
-    },[props.participants])
+    }, [props.participants])
     return (
         <>
             <Row>

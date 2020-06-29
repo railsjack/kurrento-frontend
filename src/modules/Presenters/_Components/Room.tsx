@@ -1,11 +1,11 @@
 import React from "react";
 // @ts-ignore
 import {Col} from 'reactstrap';
-import usePresenterViewModel from '../ViewModels/Presenters/PresenterViewModel';
+import useParticipantViewModel from '../ViewModels/Participants/ParticipantRoomViewModel';
 import '../../../assets/scss/presenter.scss'
 
 const Room = (props: any) => {
-    const view = usePresenterViewModel({props});
+    const view = useParticipantViewModel({props});
     return (
         <>
             <Col md={12} className="pl-0 pr-0">
