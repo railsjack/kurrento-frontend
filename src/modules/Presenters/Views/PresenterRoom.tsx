@@ -15,20 +15,23 @@ const PresenterRoom = (props: any) => {
     const urlParams = props.match.params;
     const userDetails = Observable.getReduxValue('userDetails');
     let username = '', roomname = '', userid = '', isPresenter = false;
+    let data;
+    let propsParams;
+    let view;
     if (userDetails) {
         username = userDetails['name'];
         userid = userDetails['user_id'];
         roomname = urlParams['id'];
-        const data = {username, roomname, userid, isPresenter};
-        const propsParams = Object.assign({}, props, {data});
-        const view = usePresenterViewModel({props: propsParams});
-        return (
-            <>
-                <PresenterRoomView participants={view.participants}/>
-            </>
-        )
+        data = {username, roomname, userid, isPresenter};
+        propsParams = Object.assign({}, props, {data});
+        view = usePresenterViewModel({props: propsParams});
     }
-    return <Redirect to={'/signin'}/>
+    return (
+        <>
+            {userDetails && <PresenterRoomView participants={view.participants}/>}
+            {!userDetails && <Redirect to={'/signin'}/>}
+        </>
+    )
 };
 export default PresenterRoom;
 
