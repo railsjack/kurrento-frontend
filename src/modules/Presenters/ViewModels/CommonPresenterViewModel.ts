@@ -10,7 +10,7 @@ class CommonPresenterViewModel extends ViewModelBase {
         this.eventDetails = new Observable(this, 'eventDetails', '');
     }
 
-    async loadEventInfo(id:number){
+    async loadEventInfo(id:any){
         const response:any = await CallServerPromise.getEventById(id);
         return new Promise((resolve,reject)=>{
             if(response.result==='success'){

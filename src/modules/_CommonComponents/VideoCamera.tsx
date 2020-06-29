@@ -3,8 +3,10 @@ import React from 'react';
 import '../_Styles/VideoCamera.css'
 
 const VideoCamera = (props: any) => {
+
   return (
-    <div className={`video-camera ${props.className}`}>Video camera</div>
+    <video className={`video-camera ${props.className}`} webkit-playsinline="webkit-playsinline" id={props.video_id}
+    muted={true} autoPlay={true}>Video camera</video>
   );
 }
 

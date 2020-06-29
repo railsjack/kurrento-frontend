@@ -1,16 +1,15 @@
-import {Observable, useViewModel} from "../../../_CommonModels/ViewModelBase";
+import {useViewModel} from "../../../_CommonModels/ViewModelBase";
 import openSocket from 'socket.io-client';
 import CommonPresenterViewModel from "../CommonPresenterViewModel";
-import {CallServerPromise} from "../../../../utils/app/call_server";
 
 const uri: any = process.env.REACT_APP_API_URL;
 const socket = openSocket(uri);
-const audienceNumberPerRoom: any = process.env.REACT_AUDIENCE_NUMBER_PER_ROOM;
 
 class PresenterView extends CommonPresenterViewModel {
+
     public roomName: string = '';
     public userName: string = '';
-    public audienceRoom: number = 2;
+    public audienceRoom: number = 0;
     public participants: any = {};
     public isPresenter: boolean = false;
     public user: object = {};
@@ -48,7 +47,6 @@ class PresenterView extends CommonPresenterViewModel {
         if (!(this.isPresenter || userdata.isPresenter)) {
             // if (!(userdata.audienceRoom == this.audienceRoom)) return;
         }
-        console.log(userdata.isPresenter, 'this.isPresenter')
         const {userid, username, isPresenter, audienceRoom} = userdata;
         const video = this.buildVideoElem(userid, username, isPresenter, audienceRoom);
         const user: any = {
@@ -98,6 +96,7 @@ class PresenterView extends CommonPresenterViewModel {
     }
 
     buildVideoElem(userid: string, username: string, isPresenter: boolean, audienceRoom: string) {
+        console.log(this.participants,'user');
         const video = document.createElement('video');
         const name = document.createElement('h3');
         name.className = "userName text-center";
@@ -108,11 +107,13 @@ class PresenterView extends CommonPresenterViewModel {
         video.setAttribute('webkit-playsinline', 'webkit-playsinline');
         name.appendChild(document.createTextNode(username));
         if (isPresenter) {
-            this.loadEventInfo(this.props.data.roomName)
+            let presenterContainer = document.createElement('div');
+            presenterContainer.appendChild(video);
+            this.loadEventInfo(this.roomName)
                 .then(data => {
                     this.setBodyBg()
                 });
-            document.getElementById('presenterVideo')?.appendChild(video);
+            document.getElementById('presenterVideo')?.appendChild(presenterContainer);
             // document.getElementById('presenterVideo')?.appendChild(name);
         } else {
             let participantContainer = document.createElement('div');
@@ -128,6 +129,7 @@ class PresenterView extends CommonPresenterViewModel {
             // participantContainer.appendChild(name);
             document.getElementById('audienceRoom')?.appendChild(participantContainer);
         }
+        console.log(video,'videovideovideo')
         return video;
     }
 
@@ -159,14 +161,15 @@ class PresenterView extends CommonPresenterViewModel {
     onExistingParticipants(message: any) {
         const userid = message.userid;
         const existingUsers = message.existingUsers;
-        console.log(existingUsers, 'existingUsers');
         this.isPresenter = message.isPresenter;
         const video = this.buildVideoElem(userid, this.userName, message.isPresenter, message.audienceRoom);
         const user: any = {
             id: userid,
             username: this.userName,
             video: video,
-            rtcPeer: null
+            rtcPeer: null,
+            audienceRoom:message.audienceRoom,
+            isPresenter:message.isPresenter
         };
         this.user = user;
         this.updateView();
@@ -229,6 +232,7 @@ class PresenterView extends CommonPresenterViewModel {
         const videoDiv = <HTMLVideoElement>document.getElementById(message.deleteUser)?.parentElement;
         if (videoDiv) videoDiv.remove();
         delete this.participants[message.deleteUser];
+        console.log(this.participants,'this.participants')
     }
 
     loadSocket() {
@@ -257,6 +261,7 @@ class PresenterView extends CommonPresenterViewModel {
     async componentDidMount() {
         const {username, roomname, userid, isPresenter} = this.props.data;
         this.roomName = roomname;
+        this.userName = username;
         const data = {username, roomname, userid, isPresenter};
         this.joinRoom(data);
     }

@@ -7,12 +7,14 @@ import ParticipantInfo from '../_Components/ParticipantInfo';
 const ParticipantRoom = (props: any) => {
     const view = useParticipantViewModel({props});
     const urlParams = props.match.params;
+    view.username = 'username';
     const data = {
         username: view.username,
         roomname: urlParams['id'],
         userid: '',
         isPresenter: false
     };
+    view.showRoom = true;
     return (
         <>
             {!view.showRoom &&

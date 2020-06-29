@@ -1,10 +1,10 @@
 import {useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
 
 const testAudienceRooms = [
-  {enabled: true, participants: [1, 2, 3]},
-  {enabled: true, participants: [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 61, 2, 3, 4, 5, 61, 2, 3, 4, 5, 6]},
-  {enabled: true, participants: [1, 2, 3, 4]},
-]
+  {enabled: true, participants: []},
+  {enabled: true, participants: []},
+  {enabled: true, participants: []},
+];
 
 
 class PresenterRoomViewModel extends ViewModelBase {
