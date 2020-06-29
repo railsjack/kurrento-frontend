@@ -16,16 +16,15 @@ const PresenterRoom = (props: any) => {
     const userDetails = Observable.getReduxValue('userDetails');
     let username = '', roomname = '', userid = '', isPresenter = false;
     let data;
-    let propsParams;
-    let view;
+    let propsParams = props;
     if (userDetails) {
         username = userDetails['name'];
         userid = userDetails['user_id'];
         roomname = urlParams['id'];
         data = {username, roomname, userid, isPresenter};
         propsParams = Object.assign({}, props, {data});
-        view = usePresenterViewModel({props: propsParams});
     }
+    let view = usePresenterViewModel({props: propsParams});
     return (
         <>
             {userDetails && <PresenterRoomView participants={view.participants}/>}
@@ -50,16 +49,16 @@ const PresenterRoomView = (props: any) => {
             participantsAry.push(props.participants[item]);
         }
     });
-    const groupBy = function (xs:any, key:any) {
-        return xs.reduce(function (rv:any, x:any) {
+    const groupBy = function (xs: any, key: any) {
+        return xs.reduce(function (rv: any, x: any) {
             (rv[x[key]] = rv[x[key]] || []).push(x);
             return rv;
         }, {});
     };
     const participantsRooms = groupBy(participantsAry, 'audienceRoom');
-    Object.keys(participantsRooms).map((item:any,index:any)=>{
-        if(!audienceRooms[index]) audienceRooms[index]={};
-        audienceRooms[index]['participants'] =participantsRooms[item];
+    Object.keys(participantsRooms).map((item: any, index: any) => {
+        if (!audienceRooms[index]) audienceRooms[index] = {};
+        audienceRooms[index]['participants'] = participantsRooms[item];
     });
     return (
         <>
