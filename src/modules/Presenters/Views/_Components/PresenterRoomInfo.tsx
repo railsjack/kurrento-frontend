@@ -8,7 +8,7 @@ const PresenterRoomInfo = (props: any) => {
   const onToggle = (status: boolean, index: number) => {
     audienceRooms[index].enabled = status;
     view.updateView();
-  }
+  };
   return (
     <div className={'info'}>
       <h3 className={'numbers'}>Audience: {props.totalPresenters}&nbsp;/&nbsp;{props.currentPresenters}</h3>

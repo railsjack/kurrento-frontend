@@ -15,7 +15,6 @@ const propTypes = {
   children: PropTypes.node,
 };
 const userDetails = Observable.getReduxValue('userDetails');
-console.log(userDetails);
 const defaultProps = {};
 
 class DefaultHeader extends Component {

@@ -36,8 +36,8 @@ export default PresenterRoom;
 const PresenterRoomView = (props: any) => {
     const view = usePresentRoomViewModel({props, initialCount: 1});
     let audienceRooms = view.audienceRooms;
-    const totalPresenters = 34;
-    const currentPresenters = 12;
+    const totalPresenters = 30;
+    const currentPresenters = Object.keys(props.participants).length - 1;
     const presentersAry: any = [];
     const participantsAry: any = [];
     Object.keys(props.participants).forEach((item, index) => {
@@ -47,10 +47,17 @@ const PresenterRoomView = (props: any) => {
             participantsAry.push(props.participants[item]);
         }
     });
-    if (audienceRooms[0]) audienceRooms[0]["participants"] = participantsAry;
-    useEffect(() => {
-        view.updateView()
-    }, [props.participants])
+    const groupBy = function (xs:any, key:any) {
+        return xs.reduce(function (rv:any, x:any) {
+            (rv[x[key]] = rv[x[key]] || []).push(x);
+            return rv;
+        }, {});
+    };
+    const participantsRooms = groupBy(participantsAry, 'audienceRoom');
+    Object.keys(participantsRooms).map((item:any,index:any)=>{
+        if(!audienceRooms[index]) audienceRooms[index]={};
+        audienceRooms[index]['participants'] =participantsRooms[item];
+    });
     return (
         <>
             <Row>

@@ -1,9 +1,7 @@
 import {useViewModel, ViewModelBase} from "../../../_CommonModels/ViewModelBase";
 
 const testAudienceRooms = [
-  {enabled: true, participants: []},
-  {enabled: true, participants: []},
-  {enabled: true, participants: []},
+  {enabled: true, participants: []}
 ];
 
 

@@ -114,7 +114,6 @@ class EventsView extends ViewModelBase {
 
     liveEvent(event_id: string) {
         const userDetails = Observable.getReduxValue('userDetails');
-        console.log(userDetails, 'userDetails');
         this.props.history.push(`/events/${event_id}/${userDetails.name}/live/`);
     }
 

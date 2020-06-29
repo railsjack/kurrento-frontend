@@ -8,7 +8,7 @@ const socket = openSocket(uri);
 class ParticipantView extends CommonPresenterViewModel {
     public roomName: string = '';
     public userName: string = '';
-    public audienceRoom: number = 0;
+    public audienceRoom: any = 0;
     public participants: any = {};
     public isPresenter: boolean = false;
     public user: object = {};
@@ -92,6 +92,7 @@ class ParticipantView extends CommonPresenterViewModel {
     }
 
     buildVideoElem(userid: string, username: string, isPresenter: boolean, audienceRoom: string) {
+        if (!(isPresenter || this.audienceRoom == audienceRoom)) return;
         const video = document.createElement('video');
         const name = document.createElement('h3');
         name.className = "userName text-center";
@@ -124,7 +125,6 @@ class ParticipantView extends CommonPresenterViewModel {
             // participantContainer.appendChild(name);
             document.getElementById('audienceRoom')?.appendChild(participantContainer);
         }
-        console.log(video, 'videovideovideo')
         return video;
     }
 
@@ -154,6 +154,7 @@ class ParticipantView extends CommonPresenterViewModel {
     }
 
     onExistingParticipants(message: any) {
+        this.audienceRoom = message.audienceRoom;
         const userid = message.userid;
         const existingUsers = message.existingUsers;
         this.isPresenter = message.isPresenter;
@@ -227,14 +228,12 @@ class ParticipantView extends CommonPresenterViewModel {
         const videoDiv = <HTMLVideoElement>document.getElementById(message.deleteUser)?.parentElement;
         if (videoDiv) videoDiv.remove();
         delete this.participants[message.deleteUser];
-        console.log(this.participants, 'this.participants')
     }
 
     loadSocket() {
         socket.on('message', (message: any) => {
             switch (message.event) {
                 case 'newParticipantArrived':
-                    console.log(message, 'newParticipantArrived');
                     this.receiveVideo(message);
                     break;
                 case 'existingParticipants':

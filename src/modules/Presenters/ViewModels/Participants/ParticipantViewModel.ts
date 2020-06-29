@@ -50,7 +50,6 @@ class ParticipantView extends CommonPresenterViewModel {
                         }
                     })
                     .catch(function (err0r) {
-                        console.log("Something went wrong!");
                     });
             }
         }
