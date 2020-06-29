@@ -25,6 +25,14 @@ const PresenterRoom = (props: any) => {
         propsParams = Object.assign({}, props, {data});
     }
     let view = usePresenterViewModel({props: propsParams});
+    setTimeout(()=>{
+        try{
+            const elem:any = document.querySelectorAll('.toggle')[0];
+            if(elem.classList[1]=='toggle-off') elem.click()
+        }
+        catch (e) {
+        }
+    },1000);
     return (
         <>
             {userDetails && <PresenterRoomView participants={view.participants}/>}
@@ -36,10 +44,11 @@ export default PresenterRoom;
 
 
 const PresenterRoomView = (props: any) => {
+
     const view = usePresentRoomViewModel({props, initialCount: 1});
-    let audienceRooms = view.audienceRooms;
-    const totalPresenters = 30;
-    const currentPresenters = Object.keys(props.participants).length - 1;
+    let audienceRooms:any = view.audienceRooms;
+    const {participants} = props;
+    const currentPresenters = Object.keys(participants).length - 1;
     const presentersAry: any = [];
     const participantsAry: any = [];
     Object.keys(props.participants).forEach((item, index) => {
@@ -60,6 +69,9 @@ const PresenterRoomView = (props: any) => {
         if (!audienceRooms[index]) audienceRooms[index] = {};
         audienceRooms[index]['participants'] = participantsRooms[item];
     });
+
+    console.log(participantsRooms,'audienceRoomsaudienceRoomsaudienceRooms')
+    console.log(audienceRooms,'audienceRoomsaudienceRoomsaudienceRooms')
     return (
         <>
             <Row>
@@ -67,7 +79,7 @@ const PresenterRoomView = (props: any) => {
                     <PresenterCamera presenters={presentersAry}/>
                     <PresenterRoomInfo
                         view={view}
-                        totalPresenters={totalPresenters} currentPresenters={currentPresenters}
+                        totalPresenters={view.totalPresenters} currentPresenters={currentPresenters}
                         audienceRooms={audienceRooms}/>
                 </Col>
             </Row>

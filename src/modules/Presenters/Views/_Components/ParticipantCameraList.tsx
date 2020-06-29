@@ -7,7 +7,7 @@ const AudienceRoom = (props: any) => {
   return enabled ? (
     <>
       <ul className='participant-list'>
-        {participants.map((participant: any, index: number) => (
+        {participants && participants.map((participant: any, index: number) => (
           <li key={String(index)} className='participant-list-item'>
             <ParticipantCamera participant={participant}/>
           </li>

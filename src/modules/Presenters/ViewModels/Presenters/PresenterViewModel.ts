@@ -51,7 +51,7 @@ class PresenterView extends CommonPresenterViewModel {
         };
 
         this.participants[user.id] = user;
-        this.updateView()
+        this.updateView();
         const video = await this.buildVideoElem(userid, username, isPresenter, audienceRoom);
         // this.participants[user.id]['video'] = video;
         // @ts-ignore
@@ -92,6 +92,7 @@ class PresenterView extends CommonPresenterViewModel {
     }
 
     buildVideoElem(userid: string, username: string, isPresenter: boolean, audienceRoom: string) {
+        console.log(userid,'buildVideoElem')
         return new Promise((resolve, reject) => {
             const videoInterval = setInterval(() => {
                 const video = document.getElementById(userid);
@@ -132,7 +133,6 @@ class PresenterView extends CommonPresenterViewModel {
         const userid = message.userid;
         const existingUsers = message.existingUsers;
         this.isPresenter = message.isPresenter;
-
         const user: any = {
             id: userid,
             username: this.userName,
