@@ -11,7 +11,7 @@ const PresenterRoomInfo = (props: any) => {
     };
     return (
         <div className={'info'}>
-            <h3 className={'numbers'}>Audience: {props.totalPresenters}&nbsp;/&nbsp;{props.currentPresenters}</h3>
+            <h3 className={'numbers'}>Audience: {props.totalUsers}&nbsp;/&nbsp;{props.currentParticipantNum}</h3>
             <ul className={'buttons-list'}>
                 {audienceRooms.map((audienceRoom: any, index: number) => (
                     <li key={String(index)} className={'actions-list-item'}>

@@ -53,7 +53,7 @@ class PresenterView extends CommonPresenterViewModel {
         this.participants[user.id] = user;
         this.updateView();
         const video = await this.buildVideoElem(userid, username, isPresenter, audienceRoom);
-        // this.participants[user.id]['video'] = video;
+        this.participants[user.id]['video'] = video;
         // @ts-ignore
         const constraints = this.getVideoConstraints(isPresenter);
         const options = {
@@ -143,7 +143,7 @@ class PresenterView extends CommonPresenterViewModel {
         this.participants[user.id] = user;
         this.updateView();
         const video = await this.buildVideoElem(userid, this.userName, message.isPresenter, message.audienceRoom);
-        // this.participants[user.id]['video'] = video;
+        this.participants[user.id]['video'] = video;
         this.user = user;
         const constraints = this.getVideoConstraints(message.isPresenter);
         const options = {
@@ -169,15 +169,6 @@ class PresenterView extends CommonPresenterViewModel {
                 this.generateOffer(onOffer)
             }
         );
-        existingUsers.forEach((element: any) => {
-            const existingUserData = {
-                audienceRoom: element.audienceRoom,
-                userid: element.id,
-                isPresenter: element.isPresenter,
-                username: element.name
-            };
-            this.receiveVideo(existingUserData);
-        });
         const onOffer = (err: any, offer: any, wp: any) => {
             const message = {
                 event: 'receiveVideoFrom',
@@ -187,9 +178,19 @@ class PresenterView extends CommonPresenterViewModel {
             };
             this.sendMessage(message);
         };
-
+        this.getUsersVideo(existingUsers);
     }
-
+    getUsersVideo(existingUsers: any){
+        existingUsers.forEach((element: any) => {
+            const existingUserData = {
+                audienceRoom: element.audienceRoom,
+                userid: element.id,
+                isPresenter: element.isPresenter,
+                username: element.name
+            };
+            this.receiveVideo(existingUserData);
+        });
+    }
     onReceiveVideoAnswer(senderid: any, sdpAnswer: any) {
         // @ts-ignore
         this.participants[senderid].rtcPeer.processAnswer(sdpAnswer);

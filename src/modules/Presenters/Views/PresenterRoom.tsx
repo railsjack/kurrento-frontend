@@ -25,14 +25,13 @@ const PresenterRoom = (props: any) => {
         propsParams = Object.assign({}, props, {data});
     }
     let view = usePresenterViewModel({props: propsParams});
-    setTimeout(()=>{
-        try{
-            const elem:any = document.querySelectorAll('.toggle')[0];
-            if(elem.classList[1]=='toggle-off') elem.click()
+    setTimeout(() => {
+        try {
+            const elem: any = document.querySelectorAll('.toggle')[0];
+            if (elem.classList[1] == 'toggle-off') elem.click()
+        } catch (e) {
         }
-        catch (e) {
-        }
-    },1000);
+    }, 1000);
     return (
         <>
             {userDetails && <PresenterRoomView participants={view.participants}/>}
@@ -44,42 +43,22 @@ export default PresenterRoom;
 
 
 const PresenterRoomView = (props: any) => {
-
     const view = usePresentRoomViewModel({props, initialCount: 1});
-    let audienceRooms:any = view.audienceRooms;
-    const {participants} = props;
-    const currentPresenters = Object.keys(participants).length - 1;
-    const presentersAry: any = [];
-    const participantsAry: any = [];
-    Object.keys(props.participants).forEach((item, index) => {
-        if (props.participants[item]['isPresenter']) {
-            presentersAry.push(props.participants[item])
-        } else {
-            participantsAry.push(props.participants[item]);
-        }
-    });
-    const groupBy = function (xs: any, key: any) {
-        return xs.reduce(function (rv: any, x: any) {
-            (rv[x[key]] = rv[x[key]] || []).push(x);
-            return rv;
-        }, {});
-    };
-    const participantsRooms = groupBy(participantsAry, 'audienceRoom');
-    Object.keys(participantsRooms).map((item: any, index: any) => {
-        if (!audienceRooms[index]) audienceRooms[index] = {};
-        audienceRooms[index]['participants'] = participantsRooms[item];
-    });
-
-    console.log(participantsRooms,'audienceRoomsaudienceRoomsaudienceRooms')
-    console.log(audienceRooms,'audienceRoomsaudienceRoomsaudienceRooms')
+    console.log(props.participants,'props.participants')
+    const currentParticipantNum = view.getCurrentParticipantNumber();
+    const users = view.getUsers();
+    const presenters = users.presenters;
+    const participants = users.participants;
+    const audienceRooms = view.getAudienceRooms(participants);
+    view.playPausedStreams();
     return (
         <>
             <Row>
                 <Col>
-                    <PresenterCamera presenters={presentersAry}/>
+                    <PresenterCamera presenters={presenters}/>
                     <PresenterRoomInfo
                         view={view}
-                        totalPresenters={view.totalPresenters} currentPresenters={currentPresenters}
+                        totalUsers={view.totalUsers} currentParticipantNum={currentParticipantNum}
                         audienceRooms={audienceRooms}/>
                 </Col>
             </Row>
