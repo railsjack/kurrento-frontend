@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import Room from '../_Components/Room';
+import React from 'react';
 import {Observable} from "../../_CommonModels/ViewModelBase";
 import '../../../assets/scss/presenter.scss'
 import {Redirect} from "react-router";
@@ -44,7 +43,6 @@ export default PresenterRoom;
 
 const PresenterRoomView = (props: any) => {
     const view = usePresentRoomViewModel({props, initialCount: 1});
-    console.log(props.participants,'props.participants')
     const currentParticipantNum = view.getCurrentParticipantNumber();
     const users = view.getUsers();
     const presenters = users.presenters;
