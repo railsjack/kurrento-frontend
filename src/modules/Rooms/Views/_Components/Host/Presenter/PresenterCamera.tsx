@@ -1,6 +1,6 @@
 import React from 'react';
-import VideoCamera from "../../../_CommonComponents/VideoCamera";
-import '../_Styles/PresenterCamera.css';
+import VideoCamera from "../../../../../_CommonComponents/VideoCamera";
+import '../../../_Styles/Host/PresenterCamera.css';
 const PresenterCamera = (props: any) => {
     const presenters = props.presenters;
     return (
@@ -10,6 +10,6 @@ const PresenterCamera = (props: any) => {
             ))}
         </>
     );
-}
+};
 
 export default PresenterCamera;

@@ -1,5 +1,13 @@
+.row{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.presenterRoomContainer{
+    background-color:#000;
+    height: 100%;
+}
 .info {
-    background-color: #e0e0e0;
+    background-color: #000;
     height: 150px;
     display: flex;
     flex-direction: column;
@@ -7,6 +15,7 @@
 }
 
 .numbers {
+    color:white;
     margin-left: 20px;
     margin-bottom: 15px;
 }

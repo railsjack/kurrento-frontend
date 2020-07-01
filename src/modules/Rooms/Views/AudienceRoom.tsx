@@ -1,10 +1,10 @@
 import React from 'react';
-import Room from '../_Components/Room';
-import useParticipantViewModel from "../ViewModels/Participants/ParticipantViewModel";
+import ParticipantView from '../_Components/ParticipantView';
+import useParticipantViewModel from "../ViewModels/Participants/ParticipantRoomViewModel";
 import {Container, Row} from "reactstrap";
 import ParticipantInfo from '../_Components/ParticipantInfo';
 
-const ParticipantRoom = (props: any) => {
+const AudienceRoom = (props: any) => {
     const view = useParticipantViewModel({props});
     const urlParams = props.match.params;
     view.username = 'username';
@@ -26,8 +26,8 @@ const ParticipantRoom = (props: any) => {
                 </Row>
             </Container>
             }
-            {view.showRoom && <Room data={data}/>}
+            {view.showRoom && <ParticipantView data={data}/>}
         </>
     )
 };
-export default ParticipantRoom;
+export default AudienceRoom;

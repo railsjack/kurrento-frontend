@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import '../_Styles/PresenterRoomInfo.css';
-import ToggleButton from "./ToggleButton";
+import React from 'react';
+import '../../../_Styles/Host/PresenterRoomInfo.css';
+import ToggleButton from "../../ToggleButton";
 
 const PresenterRoomInfo = (props: any) => {
     const audienceRooms = props.audienceRooms;

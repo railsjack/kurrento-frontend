@@ -55,6 +55,7 @@ export default class SocketEvent {
         }
     }
     receiveVideo(message: any) {
+
     }
 
     joinRoom(data: any) {

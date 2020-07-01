@@ -1,5 +1,5 @@
 import React from 'react';
-import '../_Styles/ParticipantRoom.css'
+import '../../../_Styles/Host/ParticipantRoom.css'
 import ParticipantCamera from "./ParticipantCamera";
 
 const AudienceRoom = (props: any) => {
@@ -15,7 +15,7 @@ const AudienceRoom = (props: any) => {
       </ul>
       <div className='clearfix'/>
     </>) : null;
-}
+};
 
 const ParticipantCameraList = (props: any) => {
   const audienceRooms = props.audienceRooms;

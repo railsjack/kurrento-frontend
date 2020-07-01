@@ -1,10 +1,10 @@
 import React from "react";
 // @ts-ignore
 import {Col} from 'reactstrap';
-import useParticipantViewModel from '../ViewModels/Participants/ParticipantRoomViewModel';
+import useParticipantViewModel from '../ViewModels/Participants/ParticipantViewModel';
 import '../../../assets/scss/presenter.scss'
 
-const Room = (props: any) => {
+const ParticipantView = (props: any) => {
     const view = useParticipantViewModel({props});
     return (
         <>
@@ -17,4 +17,4 @@ const Room = (props: any) => {
         </>
     );
 };
-export default Room;
+export default ParticipantView;

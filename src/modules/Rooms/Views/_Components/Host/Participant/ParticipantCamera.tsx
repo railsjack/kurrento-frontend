@@ -1,6 +1,6 @@
 import React from 'react';
-import VideoCamera from "../../../_CommonComponents/VideoCamera";
-import '../_Styles/ParticipantCamera.css';
+import VideoCamera from "../../../../../_CommonComponents/VideoCamera";
+import '../../../_Styles/Host/ParticipantCamera.css';
 
 const ParticipantCamera = (props: any) => {
   return (

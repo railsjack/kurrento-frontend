@@ -12,8 +12,8 @@ import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import store, {persistor} from '../../config/redux/store';
 import './scss/App.scss';
 
-const PresenterRoom = React.lazy(() => import('../Presenters/Views/PresenterRoom'));
-const ParticipantRoom = React.lazy(() => import('../Presenters/Views/ParticipantRoom'));
+const PresenterRoom = React.lazy(() => import('../Rooms/Views/HostRoom'));
+const ParticipantRoom = React.lazy(() => import('../Rooms/Views/AudienceRoom'));
 
 const SignIn = React.lazy(() => import('../User/Views/Login'));
 

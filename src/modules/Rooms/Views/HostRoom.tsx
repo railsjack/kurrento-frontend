@@ -4,13 +4,13 @@ import '../../../assets/scss/presenter.scss'
 import {Redirect} from "react-router";
 
 import {Col, Row} from "reactstrap";
-import PresenterRoomInfo from "./_Components/PresenterRoomInfo";
-import PresenterCamera from "./_Components/PresenterCamera";
-import ParticipantCameraList from "./_Components/ParticipantCameraList";
+import PresenterRoomInfo from "./_Components/Host/Presenter/PresenterRoomInfo";
+import PresenterCamera from "./_Components/Host/Presenter/PresenterCamera";
+import ParticipantCameraList from "./_Components/Host/Participant/ParticipantCameraList";
 import usePresentRoomViewModel from '../ViewModels/Presenters/PresenterRoomViewModel'
 import usePresenterViewModel from "../ViewModels/Presenters/PresenterViewModel";
 
-const PresenterRoom = (props: any) => {
+const HostRoom = (props: any) => {
     const urlParams = props.match.params;
     const userDetails = Observable.getReduxValue('userDetails');
     let username = '', roomname = '', userid = '', isPresenter = false;
@@ -32,13 +32,13 @@ const PresenterRoom = (props: any) => {
         }
     }, 1000);
     return (
-        <>
+        <div  className={'presenterRoomContainer'}>
             {userDetails && <PresenterRoomView participants={view.participants}/>}
             {!userDetails && <Redirect to={'/signin'}/>}
-        </>
+        </div>
     )
 };
-export default PresenterRoom;
+export default HostRoom;
 
 
 const PresenterRoomView = (props: any) => {

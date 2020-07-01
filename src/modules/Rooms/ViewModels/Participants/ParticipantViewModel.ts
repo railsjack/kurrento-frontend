@@ -40,9 +40,6 @@ class ParticipantView extends CommonPresenterViewModel {
     }
 
     receiveVideo(userdata: any) {
-        if (!(this.isPresenter || userdata.isPresenter)) {
-            // if (!(userdata.audienceRoom == this.audienceRoom)) return;
-        }
         const {userid, username, isPresenter, audienceRoom} = userdata;
         const video = this.buildVideoElem(userid, username, isPresenter, audienceRoom);
         const user: any = {
@@ -99,7 +96,6 @@ class ParticipantView extends CommonPresenterViewModel {
         if (username === this.userName) name.className += ' curUser';
         video.id = userid;
         video.autoplay = true;
-        video.muted = true;
         video.setAttribute('webkit-playsinline', 'webkit-playsinline');
         name.appendChild(document.createTextNode(username));
         if (isPresenter) {
@@ -141,7 +137,7 @@ class ParticipantView extends CommonPresenterViewModel {
             }
         }
         return {
-            audio: true,
+            audio: false,
             video: {
                 mandatory: {
                     minHeight: 90,

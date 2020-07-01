@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import '../_Styles/ToggleButton.css';
+import '../_Styles/Host/ToggleButton.css';
 
 const ToggleButton = (props: any) => {
   const [status, setStatus] = useState(props.on)
