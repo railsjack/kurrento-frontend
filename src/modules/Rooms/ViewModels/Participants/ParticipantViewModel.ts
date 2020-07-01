@@ -21,7 +21,6 @@ class ParticipantView extends CommonPresenterViewModel {
     sendMessage(message: any) {
         socket.emit('message', message);
     }
-
     joinRoom(data: any) {
         const {username, roomname, isPresenter, userid} = data;
         if (!roomname || !username) {
@@ -39,19 +38,20 @@ class ParticipantView extends CommonPresenterViewModel {
         }
     }
 
-    receiveVideo(userdata: any) {
+    async receiveVideo(userdata: any) {
         const {userid, username, isPresenter, audienceRoom} = userdata;
-        const video = this.buildVideoElem(userid, username, isPresenter, audienceRoom);
         const user: any = {
             id: userid,
             username: username,
-            video: video,
             rtcPeer: null,
             isPresenter,
             audienceRoom
         };
-        // @ts-ignore
         this.participants[user.id] = user;
+        this.updateView();
+        const video = await this.buildVideoElem(userid, username, isPresenter, audienceRoom);
+        this.participants[user.id]['video'] = video;
+        // @ts-ignore
         const constraints = this.getVideoConstraints(isPresenter);
         const options = {
             remoteVideo: video,
@@ -89,39 +89,15 @@ class ParticipantView extends CommonPresenterViewModel {
     }
 
     buildVideoElem(userid: string, username: string, isPresenter: boolean, audienceRoom: string) {
-        if (!(isPresenter || this.audienceRoom == audienceRoom)) return;
-        const video = document.createElement('video');
-        const name = document.createElement('h3');
-        name.className = "userName text-center";
-        if (username === this.userName) name.className += ' curUser';
-        video.id = userid;
-        video.autoplay = true;
-        video.setAttribute('webkit-playsinline', 'webkit-playsinline');
-        name.appendChild(document.createTextNode(username));
-        if (isPresenter) {
-            let presenterContainer = document.createElement('div');
-            presenterContainer.appendChild(video);
-            this.loadEventInfo(this.roomName)
-                .then(data => {
-                    this.setBodyBg()
-                });
-            document.getElementById('presenterVideo')?.appendChild(presenterContainer);
-            // document.getElementById('presenterVideo')?.appendChild(name);
-        } else {
-            let participantContainer = document.createElement('div');
-            participantContainer.className = 'participantContainer';
-            let videoContainer = document.getElementById(audienceRoom);
-            if (!videoContainer) {
-                videoContainer = document.createElement('div');
-                videoContainer.className = "col-md-12";
-                videoContainer.id = audienceRoom;
-            }
-            // name.style.width = '160px';
-            participantContainer.appendChild(video);
-            // participantContainer.appendChild(name);
-            document.getElementById('audienceRoom')?.appendChild(participantContainer);
-        }
-        return video;
+        return new Promise((resolve, reject) => {
+            const videoInterval = setInterval(() => {
+                const video = document.getElementById(userid);
+                if (video) {
+                    clearInterval(videoInterval);
+                    resolve(video);
+                }
+            }, 10);
+        });
     }
 
     getVideoConstraints(isPresenter: boolean) {
@@ -149,23 +125,23 @@ class ParticipantView extends CommonPresenterViewModel {
         }
     }
 
-    onExistingParticipants(message: any) {
+    async onExistingParticipants(message: any) {
         this.audienceRoom = message.audienceRoom;
         const userid = message.userid;
         const existingUsers = message.existingUsers;
         this.isPresenter = message.isPresenter;
-        const video = this.buildVideoElem(userid, this.userName, message.isPresenter, message.audienceRoom);
         const user: any = {
             id: userid,
             username: this.userName,
-            video: video,
             rtcPeer: null,
             audienceRoom: message.audienceRoom,
             isPresenter: message.isPresenter
         };
-        this.user = user;
-        this.updateView();
         this.participants[user.id] = user;
+        this.updateView();
+        const video = await this.buildVideoElem(userid, this.userName, message.isPresenter, message.audienceRoom);
+        this.participants[user.id]['video'] = video;
+        this.user = user;
         const constraints = this.getVideoConstraints(message.isPresenter);
         const options = {
             localVideo: video,
@@ -221,9 +197,8 @@ class ParticipantView extends CommonPresenterViewModel {
     }
 
     deleteUser(message: any) {
-        const videoDiv = <HTMLVideoElement>document.getElementById(message.deleteUser)?.parentElement;
-        if (videoDiv) videoDiv.remove();
         delete this.participants[message.deleteUser];
+        this.updateView();
     }
 
     loadSocket() {

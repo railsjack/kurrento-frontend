@@ -1,7 +1,13 @@
 .video-camera {
     font-size: 20pt;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+}
+.video-camera.sm {
+    width: 128px;
+    height: 72px;
+}
+
+.video-camera.md {
+    width: 200px;
+    height: 150px;
 }

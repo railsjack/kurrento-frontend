@@ -1,6 +1,6 @@
 import React from 'react';
 import {Observable} from "../../_CommonModels/ViewModelBase";
-import '../../../assets/scss/presenter.scss'
+import '../../../assets/scss/room.scss'
 import {Redirect} from "react-router";
 
 import {Col, Row} from "reactstrap";

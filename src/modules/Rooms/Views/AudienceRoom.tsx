@@ -1,8 +1,8 @@
 import React from 'react';
-import ParticipantView from '../_Components/ParticipantView';
+import ParticipantView from './_Components/Audience/ParticipantView';
 import useParticipantViewModel from "../ViewModels/Participants/ParticipantRoomViewModel";
 import {Container, Row} from "reactstrap";
-import ParticipantInfo from '../_Components/ParticipantInfo';
+import ParticipantInfo from './_Components/Audience/ParticipantInfo';
 
 const AudienceRoom = (props: any) => {
     const view = useParticipantViewModel({props});

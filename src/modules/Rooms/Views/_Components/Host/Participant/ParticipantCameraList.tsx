@@ -26,6 +26,6 @@ const ParticipantCameraList = (props: any) => {
       )}
     </div>
   );
-}
+};
 
 export default ParticipantCameraList;

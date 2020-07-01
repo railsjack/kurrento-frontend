@@ -1,0 +1,51 @@
+$participantVideoHeight: 72px;
+$presenterVideoHeight: calc(100vh - #{$participantVideoHeight});
+$presenterVideoRatio: 4/3;
+.mainContainer {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  .presenterContainer {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: $participantVideoHeight;
+    width: 100%;
+    height: $presenterVideoHeight;
+
+    video.presenter-video-loaded {
+      border: solid 3px #000;
+      height: $presenterVideoHeight;
+      margin-left: calc((100% - (#{$presenterVideoHeight} * #{$presenterVideoRatio})) / 2);
+    }
+  }
+
+  .audienceContainer {
+    width: 100%;
+    position: absolute;
+    margin-top: $presenterVideoHeight;
+    background-color: #000;
+    height: $participantVideoHeight;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .mainContainer {
+    .presenterContainer {
+      width: 100vw;
+      height: auto;
+
+      video {
+        width: 100%;
+        height: auto;
+        margin: 0px;
+      }
+    }
+
+    .audienceContainer {
+      margin-top: calc(100vw * 0.75);
+      min-height: calc(100% - 100vw * 0.75);
+    }
+  }
+}

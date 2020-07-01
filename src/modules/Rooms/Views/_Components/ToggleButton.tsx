@@ -2,16 +2,16 @@ import React, {useEffect, useState} from "react";
 import '../_Styles/Host/ToggleButton.css';
 
 const ToggleButton = (props: any) => {
-  const [status, setStatus] = useState(props.on)
+  const [status, setStatus] = useState(props.on);
   const onToggle = () => {
     const newStatus: any = !status;
     setStatus(newStatus);
     props.onToggle && props.onToggle(newStatus);
-  }
+  };
 
   const onReceiveStatusByOutside = () => {
     setStatus(props.on);
-  }
+  };
   useEffect(onReceiveStatusByOutside, [props.on])
 
   const toggleClass = status ? 'toggle-on' : 'toggle-off';

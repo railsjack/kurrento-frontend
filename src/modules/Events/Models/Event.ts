@@ -22,33 +22,33 @@ class Event extends ModelBase {
     ];
     waterMarkPinPositions = [
         {
-            value: 'TOP_LEFT',
+            value: 1,
             text: 'TOP LEFT'
         },
         {
-            value: 'TOP_RIGHT',
+            value: 2,
             text: 'TOP RIGHT'
         },
         {
-            value: 'BOTTOM_RIGHT',
+            value: 3,
             text: 'BOTTOM RIGHT'
         },
         {
-            value: 'BOTTOM_LEFT',
+            value: 4,
             text: 'BOTTOM LEFT'
         }
     ];
     event_layouts = [
         {
-            value:'0',
+            value:1,
             text:'Layout 1'
         },
         {
-            value:'1',
+            value:2,
             text:'Layout 2'
         },
         {
-            value:'2',
+            value:3,
             text:'Layout 3'
         }
     ];

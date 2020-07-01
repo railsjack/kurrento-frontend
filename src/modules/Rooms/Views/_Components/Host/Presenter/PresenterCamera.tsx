@@ -6,7 +6,8 @@ const PresenterCamera = (props: any) => {
     return (
         <>
             {presenters.map((presenter: any, index: number) => (
-                <VideoCamera className={'presenter-camera'} key={index} video_id={presenter.id}/>
+                <VideoCamera className={'presenter-camera d-flex justify-content-center flex-column'}
+                             size="md" key={index} video_id={presenter.id}/>
             ))}
         </>
     );

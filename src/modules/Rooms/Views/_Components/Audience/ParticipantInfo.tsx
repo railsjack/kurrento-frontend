@@ -1,7 +1,8 @@
 import React from 'react';
 import {Button, Col} from "reactstrap";
 import FacebookLogin from "react-facebook-login";
-import '../../../assets/scss/presenter.scss'
+import '../../../../../assets/scss/room.scss'
+import '../../_Styles/Audience/Audience.scss'
 const ParticipantInfo = (props: any) => {
     const view = props.view;
     const onUsernameChange=(e:any)=>{
