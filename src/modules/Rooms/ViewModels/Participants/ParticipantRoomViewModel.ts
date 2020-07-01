@@ -40,7 +40,6 @@ class ParticipantView extends CommonPresenterViewModel {
         this.updateView()
     }
     async componentDidMount() {
-        console.log(Observable.getReduxValue('eventDetails'),'eventDetails');
         if (!this.showRoom) {
             const video = document.querySelector("#videoElement");
             if (navigator.mediaDevices.getUserMedia) {
