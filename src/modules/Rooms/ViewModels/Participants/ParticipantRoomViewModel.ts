@@ -1,14 +1,14 @@
-import {useViewModel, ViewModelBase, Observable} from "../../../_CommonModels/ViewModelBase";
+import {useViewModel} from "../../../_CommonModels/ViewModelBase";
 import AppToast from "../../../../utils/misc/app_toast";
 import {ReactFacebookLoginInfo} from "react-facebook-login";
-import {CallServerPromise} from "../../../../utils/app/call_server";
 import CommonPresenterViewModel from "../CommonPresenterViewModel";
 
 class ParticipantView extends CommonPresenterViewModel {
     showRoom: boolean = false;
     username: string = '';
     appToast: AppToast;
-    eventInfo:any;
+    eventInfo: any;
+
     constructor() {
         super();
         this.appToast = new AppToast();
@@ -39,6 +39,7 @@ class ParticipantView extends CommonPresenterViewModel {
         this.showRoom = true;
         this.updateView()
     }
+
     async componentDidMount() {
         if (!this.showRoom) {
             const video = document.querySelector("#videoElement");
