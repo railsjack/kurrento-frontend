@@ -13,7 +13,7 @@
 }
 
 .video-camera-wrapper {
-
+    display: inline-block;
 }
 
 .video-camera-watermark {

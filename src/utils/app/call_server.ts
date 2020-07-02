@@ -1,4 +1,5 @@
 const apiUrl = process.env.REACT_APP_API_URL;
+
 const prefix = '/api/';
 
 const serialize = (obj: any) => {
@@ -13,6 +14,7 @@ const serialize = (obj: any) => {
 };
 
 class CallServerPromiseClass {
+
     private call_server_promise(
         api: string,
         data: any = null,
