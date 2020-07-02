@@ -12,11 +12,12 @@ const ParticipantView = (props: any) => {
     const participants = Object.keys(view.participants).map((item) => view.participants[item]) || [];
     const [presenterVideoLoaded, setPresenterVideoStatus] = useState(false);
     let presenterVideoClass = presenterVideoLoaded ? 'presenter-video-loaded' : '';
+    let watermark = {};
     if (presenterVideoLoaded) {
         const eventDetails = Observable.getReduxValue('eventDetails');
-        const watermark_image = eventDetails.default_video_watermark.replaceAll('\\', '/');
-        const watermark_position = eventDetails.watermark_position;
-        console.log(eventDetails,'eventDetails');
+        const url = eventDetails.default_video_watermark.replaceAll('\\', '/');
+        const position = eventDetails.watermark_position;
+        watermark = {url, position};
     }
     return (
         <div className="mainContainer">
@@ -24,7 +25,7 @@ const ParticipantView = (props: any) => {
                 {participants && participants.map(
                     (participant: any, index: number) => {
                         if (participant.isPresenter) {
-                            return <VideoCamera video_id={participant.id} key={index}
+                            return <VideoCamera watermark={watermark} video_id={participant.id} key={index}
                                                 onVideoDataLoad={() => setPresenterVideoStatus(true)}/>
                         }
                     })
