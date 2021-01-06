@@ -32,7 +32,7 @@
     "@types/react-copy-to-clipboard": "^4.3.0",
     "@types/react-facebook-login": "^4.1.2",
     "@types/socket.io-client": "^1.4.33",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "classnames": "^2.2.6",
